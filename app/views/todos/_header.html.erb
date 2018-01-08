@@ -1,0 +1,12 @@
+
+<div id="header">
+  <h1>todos</h1>
+  <%= form_with model: Todo.new, remote: true, authenticity_token: true do |f| %>
+    <%= f.text_field :title,
+          id: "new-todo",
+          placeholder: "What needs to be done?",
+          autofocus: true,
+          data: {target: "todo_title"},
+          autocomplete: "off" %>
+  <% end %>
+</div>

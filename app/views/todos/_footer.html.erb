@@ -1,0 +1,37 @@
+<div id="footer" class="<%= "hidden" unless @todos.any? %>">
+  <span id="todo-count" data-target="todo.active_number">
+    <%= pluralize @todos.reject(&:completed).size, "item" %> left
+  </span>
+  <ul id="filters">
+    <li>
+      <%= link_to "All",
+            root_path,
+            data: { action: "click->todo#select_filter", target: "todo.filter" },
+            name: "all",
+            class: "selected" %>
+    </li>
+    <li>
+      <%= link_to "Active",
+            root_path({completed: false}),
+            name: "active",
+            data: { action: "click->todo#select_filter", target: "todo.filter" } %>
+    </li>
+    <li>
+      <%= link_to "Completed",
+            root_path({completed: true}),
+            name: "completed",
+            data: { action: "click->todo#select_filter", target: "todo.filter" } %>
+    </li>
+  </ul>
+  <% if @todos.select { |t| t.completed }.size > 0 %>
+    <%= form_with url: destroy_many_todos_path,
+                  remote: true,
+                  authenticity_token: true,
+                  method: :delete do %>
+      <% @todos.select { |t| t.completed }.map do |todo| %>
+        <%= hidden_field_tag "ids[]", todo.id %>
+      <% end %>
+      <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroy_all", target: "clear_completed"} %>
+    <% end %>
+  <% end %>
+</div>
