@@ -11,6 +11,9 @@
                   authenticity_token: true do %>
       <% @todos.map do |todo| %>
         <%= hidden_field_tag "ids[]", todo.id %>
+        <%= completed_filter_field %>
+
+
       <% end %>
       <%= check_box :todo, :completed, checked: @todos.any? && @todos.all?(&:completed), id: "toggle-all" %>
       <label for="toggle-all">Mark all as complete</label>

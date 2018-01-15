@@ -6,7 +6,7 @@
                   data: { action: "click->todo#toggle" } do |f| %>
 
       <%= f.check_box :completed, class: "toggle" %>
-      <%= hidden_field_tag "completed_filter", request.fullpath.match("completed=false") ? false : request.fullpath.match("completed=true") ? true : nil %>
+      <%= completed_filter_field %>
     <% end %>
 
 
@@ -35,6 +35,7 @@
                   html: { class: "destroy_todo" },
                   data: {action: "click->todo#destroy"} do |f| %>
       <%= button_tag "", class: "destroy" %>
+      <%= completed_filter_field %>
     <% end %>
 
   </div>

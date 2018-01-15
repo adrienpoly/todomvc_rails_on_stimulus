@@ -8,7 +8,6 @@
           autofocus: true,
           data: {target: "todo_title"},
           autocomplete: "off" %>
-    <%= hidden_field_tag "completed_filter", request.fullpath.match("completed=false") ? false : request.fullpath.match("completed=true") ? true : nil %>
-
+    <%= completed_filter_field %>
   <% end %>
 </div>

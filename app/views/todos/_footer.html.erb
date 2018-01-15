@@ -32,6 +32,7 @@
         <%= hidden_field_tag "ids[]", todo.id %>
       <% end %>
       <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroy_all", target: "clear_completed"} %>
+      <%= completed_filter_field %>
     <% end %>
   <% end %>
 </div>
