@@ -11,7 +11,7 @@
 
 
     <div data-controller="editable" data-target="editable.title" >
-      <label class="toggle-me" data-action="dblclick->editable#edit_on_dbClick"><%= todo.title %></label>
+      <label class="toggle-me" data-action="dblclick->editable#editOnDbClick"><%= todo.title %></label>
       <%= form_with model: todo,
       remote: true,
       data: { target: "editable.input-form" },
@@ -21,7 +21,7 @@
           <%= f.text_field :title,
               class: "edit",
               data: {
-                action: "blur->editable#submit_on_blur keyup->editable#close_on_esc",
+                action: "blur->editable#submitOnBlur keyup->editable#closeOnEsc",
                 target: "editable.input"
               },
               autocomplete: "off" %>
