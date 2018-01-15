@@ -1,12 +1,12 @@
-<li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-controller="todoitem" data-target="todo.task" >
+<li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-target="todo.task" >
   <div class="view">
     <%= form_with model: todo,
                   remote: true,
                   authenticity_token: true,
-                  data: { action: "change->todo#toggle" } do |f| %>
+                  data: { action: "click->todo#toggle" } do |f| %>
 
       <%= f.check_box :completed, class: "toggle" %>
-
+      <%= hidden_field_tag "completed_filter", request.fullpath.match("completed=false") ? false : request.fullpath.match("completed=true") ? true : nil %>
     <% end %>
 
 
