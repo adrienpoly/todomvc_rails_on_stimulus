@@ -3,7 +3,7 @@ var reloadWithTurbolinks = (() => {
   var scrollPosition;
   function reload() {
     scrollPosition = [window.scrollX, window.scrollY];
-    Turbolinks.visit("<%= escape_javascript(todos_url) %>")
+    Turbolinks.visit("<%= escape_javascript(todos_url(@params)) %>", {action: "replace"})
   }
 
   document.addEventListener("turbolinks:load", function() {

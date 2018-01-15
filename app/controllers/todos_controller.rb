@@ -34,7 +34,6 @@ class TodosController < ApplicationController
   private
 
   def todo_params
-    p params
     params.require(:todo).permit(:id, :title, :completed, :completed_filter)
   end
 
