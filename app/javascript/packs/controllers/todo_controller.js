@@ -31,13 +31,8 @@ export default class extends Controller {
 
   destroy(_event, form) {
     const todo = form.closest("li");
-    Rails.fire(form, "submit");
     todo.classList.add("hidden");
     this.setActiveNumber();
-  }
-
-  destroy2(_event, form) {
-    console.log("destroy2");
   }
 
   toggle_all(_event, form) {
