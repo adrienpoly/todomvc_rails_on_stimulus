@@ -35,7 +35,7 @@ export default class extends Controller {
 
   destroy(_event, form) {
     const todo = form.closest("li");
-    todo.classList.add("hidden");
+    todo.classList.add("hidden", "completed");
     this.setActiveNumber();
   }
 
