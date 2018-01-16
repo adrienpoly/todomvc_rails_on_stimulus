@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class TodosController < ApplicationController
-  helper_method :filtering_params
+  # helper_method :filtering_params
 
   def index
     load_todos
@@ -16,10 +18,9 @@ class TodosController < ApplicationController
   end
 
   def update_many
-    Todo.where(id: params[:ids]).update_all(todo_params.to_h)
+    Todo.where(id: params[:ids]).update_attributes(todo_params.to_h)
     load_and_render_index
   end
-
 
   def destroy
     Todo.find_by(id: params[:id]).try(:destroy)
@@ -34,14 +35,12 @@ class TodosController < ApplicationController
   private
 
   def todo_params
-    p params
-    params.require(:todo).permit(:id, :title, :completed)
+    params.require(:todo).permit(:id, :title, :completed, :completed_filter)
   end
 
   def load_and_render_index
     load_todos
-    # url_params = params[:completed] ? { completed: params[:completed] } : ""
-    # redirect_to root_path(url_params)
+    @params = params[:completed_filter].blank? ? '' : { completed: params[:completed_filter] }
     render :index
   end
 
@@ -51,9 +50,8 @@ class TodosController < ApplicationController
 
   def load_todos
     @todos = Todo.belonging_to(session_user).order(created_at: :asc)
-
     # filtering_params.each do |key, value|
-      # @todos = @todos.public_send(key, value) if value.present?
+    # @todos = @todos.public_send(key, value) if value.present?
     # end
   end
 end

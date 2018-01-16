@@ -1,17 +1,17 @@
-<li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-controller="todoitem" data-target="todo.task" >
+<li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-target="todo.task" >
   <div class="view">
     <%= form_with model: todo,
                   remote: true,
                   authenticity_token: true,
-                  data: { action: "change->todo#toggle" } do |f| %>
+                  data: { action: "click->todo#toggle" } do |f| %>
 
       <%= f.check_box :completed, class: "toggle" %>
-
+      <%= completed_filter_field %>
     <% end %>
 
 
     <div data-controller="editable" data-target="editable.title" >
-      <label class="toggle-me" data-action="dblclick->editable#edit_on_dbClick"><%= todo.title %></label>
+      <label class="toggle-me" data-action="dblclick->editable#editOnDbClick"><%= todo.title %></label>
       <%= form_with model: todo,
       remote: true,
       data: { target: "editable.input-form" },
@@ -21,7 +21,7 @@
           <%= f.text_field :title,
               class: "edit",
               data: {
-                action: "blur->editable#submit_on_blur keyup->editable#close_on_esc",
+                action: "blur->editable#submitOnBlur keyup->editable#closeOnEsc",
                 target: "editable.input"
               },
               autocomplete: "off" %>
@@ -35,6 +35,7 @@
                   html: { class: "destroy_todo" },
                   data: {action: "click->todo#destroy"} do |f| %>
       <%= button_tag "", class: "destroy" %>
+      <%= completed_filter_field %>
     <% end %>
 
   </div>

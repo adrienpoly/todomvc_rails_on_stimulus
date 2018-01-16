@@ -1,5 +1,7 @@
 import { Controller } from "stimulus";
 import pluralize from "pluralize";
+import Rails from "rails-ujs";
+import createDOMPurify from "dompurify";
 
 const ALL = "all";
 const COMPLETED = "completed";
@@ -13,12 +15,14 @@ export default class extends Controller {
   }
 
   initializeFilter() {
-    const completed = new URLSearchParams(window.location.search).get(
+    const completedParam = new URLSearchParams(window.location.search).get(
       "completed"
     );
 
     this.filter =
-      completed == null ? ALL : completed == "true" ? COMPLETED : ACTIVE;
+      completedParam === null
+        ? ALL
+        : completedParam === "true" ? COMPLETED : ACTIVE;
   }
 
   toggle(_event, form) {
@@ -31,32 +35,27 @@ export default class extends Controller {
 
   destroy(_event, form) {
     const todo = form.closest("li");
-    Rails.fire(form, "submit");
     todo.classList.add("hidden");
     this.setActiveNumber();
   }
 
-  destroy2(_event, form) {
-    console.log("destroy2");
-  }
-
-  toggle_all(_event, form) {
+  toggleAll(_event, form) {
     Rails.fire(form, "submit");
-    this.toggleAll = !this.toggleAll;
+    this.isToggleAll = !this.isToggleAll;
     this.taskElements.forEach(task => {
-      task.classList.toggle("completed", this.toggleAll);
-      task.querySelector(".toggle").checked = this.toggleAll;
+      task.classList.toggle("completed", this.isToggleAll);
+      task.querySelector(".toggle").checked = this.isToggleAll;
     });
     this.setActiveNumber();
   }
 
-  destroy_all() {
+  destroyAll() {
     this.completedTaskElements.forEach(task => {
       task.classList.add("hidden");
     });
   }
 
-  select_filter(event, target) {
+  selectFilter(event, target) {
     this.filter = target.name;
     this.renderTodos();
     this.renderFilters();
@@ -65,17 +64,19 @@ export default class extends Controller {
   private;
 
   setActiveNumber() {
-    this.display_active.innerHTML = `${this.active} ${pluralize(
+    const DOMPurify = createDOMPurify(window);
+    const activeNumberStr = `${this.active} ${pluralize(
       "item",
       this.active
     )} left`;
+    this.displayActive.innerHTML = DOMPurify.sanitize(activeNumberStr);
   }
 
   renderTodos() {
     this.taskElements.forEach(element => {
-      if (this.filter == ALL) {
+      if (this.filter === ALL) {
         element.classList.remove("hidden");
-      } else if (this.filter == COMPLETED) {
+      } else if (this.filter === COMPLETED) {
         element.classList.toggle(
           "hidden",
           !element.classList.contains("completed")
@@ -91,7 +92,7 @@ export default class extends Controller {
 
   renderFilters() {
     this.filterElements.forEach(filter => {
-      filter.classList.toggle("selected", filter.name == this.filter);
+      filter.classList.toggle("selected", filter.name === this.filter);
     });
   }
 
@@ -103,12 +104,12 @@ export default class extends Controller {
     this.data.set("filter", name);
   }
 
-  set toggleAll(bool) {
-    this.data.set("toggle_all", bool);
+  set isToggleAll(bool) {
+    this.data.set("toggle-all", bool);
   }
 
-  get toggleAll() {
-    return this.data.get("toggle_all") == "true";
+  get isToggleAll() {
+    return this.data.get("toggle-all") === "true";
   }
 
   get filter() {
@@ -119,8 +120,8 @@ export default class extends Controller {
     }
   }
 
-  get display_active() {
-    return this.targets.find("active_number");
+  get displayActive() {
+    return this.targets.find("active-number");
   }
 
   get active() {

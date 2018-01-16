@@ -1,0 +1,41 @@
+inherit_from: .rubocop_todo.yml
+
+
+AllCops:
+  Include:
+    - Rakefile
+    - '**/Gemfile'
+    - '**/Guardfile'
+  Exclude:
+    - db/schema.rb
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'bin/**/*'
+
+Rails:
+  Enabled: true
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context', 'feature', 'scenario', 'namespace']
+  Exclude:
+    - 'spec/**/*.rb'
+    - '**/Guardfile'
+    - 'config/**/*.rb'
+    - 'Gemfile'
+    - 'lib/tasks/auto_annotate_models.rake'
+
+Rails/Output:
+  Exclude:
+    - 'db/*.rb'
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false

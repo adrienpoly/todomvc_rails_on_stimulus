@@ -1,4 +1,4 @@
-<div id="todoapp" data-controller="todo" data-todo-toggle_all="<%= @todos.any? && @todos.all?(&:completed) %>">
+<div id="todoapp" data-controller="todo" data-todo-toggle-all="<%= @todos.any? && @todos.all?(&:completed) %>">
 
   <%= render 'header' %>
 
@@ -7,10 +7,13 @@
                   method: :put,
                   remote: true,
                   id: "update_many_todos",
-                  data: {action: "change->todo#toggle_all"},
+                  data: {action: "change->todo#toggleAll"},
                   authenticity_token: true do %>
       <% @todos.map do |todo| %>
         <%= hidden_field_tag "ids[]", todo.id %>
+        <%= completed_filter_field %>
+
+
       <% end %>
       <%= check_box :todo, :completed, checked: @todos.any? && @todos.all?(&:completed), id: "toggle-all" %>
       <label for="toggle-all">Mark all as complete</label>
