@@ -1,17 +1,17 @@
-# A TodoMVC built with Rails and Turbolinks and boosted with Stimulus
+# A TodoMVC built with Rails, Turbolinks and boosted with Stimulus
 
 This is a **modest** attempt to create a TodoMVC with Rails, Turbolinks and boost it a bit with Stimulus.
 This project was inspired by [this project](https://github.com/nateberkopec/todomvc-turbolinks) : a TodoMVC built with Rails and Turbolinks 3
 
-The goal of this project was primarily to get more familiar and practice with the new [Stimulus](https://github.com/stimulusjs/stimulus) framework.
 
 ## The concept behind
 
-The goal was really to use Turbolinks and Stimulus as much as possible within a test project. The approach taken in this project is to make most of the action on the todolist client side with Stimulus controller to get this crisp and fast feeling of client side rendering.
-This Todolist preserves the data in a database within the backend. Each action is therefore linked to a call to the backend to update the content in the database. Those calls are post submission to keep strong parameters.
-As a return from the backend, the page is refresh by Turbolinks. Unless there is a problem persisting the data in the database the refresh is not visible as it is the same as what has already been done by Stimulus controllers.
+The goal of this project was primarily to get more familiar and practice with the new [Stimulus](https://github.com/stimulusjs/stimulus) framework. 
+The approach taken in this project is to make most of the actions on the todolist client side with Stimulus controller **to get this crisp and fast feeling of client side rendering**.
+This Todolist preserves the data in a database within the backend. Each action is therefore linked to a call to the backend to update the content in the database. Those calls are form post submission to keep strong parameters (an alternative could be Ajax post).
+As a return from the backend, the page is silently refreshed by Turbolinks. Unless there is a problem persisting the data in the database the refresh is not visible as it is the same as what has already been done by Stimulus controllers.
 
-Once again this is probably not an approach that I would take in production but for this purpose of demo, it does make the job!
+This is probably not an approach that I would take in production but for this purpose of demo, it does make the job!
 
 ## Demo
 
