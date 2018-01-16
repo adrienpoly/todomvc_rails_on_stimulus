@@ -1,6 +1,7 @@
 import { Controller } from "stimulus";
 import pluralize from "pluralize";
 import Rails from "rails-ujs";
+import createDOMPurify from "dompurify";
 
 const ALL = "all";
 const COMPLETED = "completed";
@@ -63,10 +64,12 @@ export default class extends Controller {
   private;
 
   setActiveNumber() {
-    this.displayActive.innerHTML = `${this.active} ${pluralize(
+    const DOMPurify = createDOMPurify(window);
+    const activeNumberStr = `${this.active} ${pluralize(
       "item",
       this.active
     )} left`;
+    this.displayActive.innerHTML = DOMPurify.sanitize(activeNumberStr);
   }
 
   renderTodos() {
