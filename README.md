@@ -1,9 +1,9 @@
 # A TodoMVC built with Rails and Turbolinks and boosted with Stimulus
 
 This is a **modest** attempt to create a TodoMVC with Rails, Turbolinks and boost it a bit with Stimulus.
-This project was inspired by https://github.com/nateberkopec/todomvc-turbolinks : a TodoMVC built with Rails and Turbolinks 3
+This project was inspired by [this project](https://github.com/nateberkopec/todomvc-turbolinks) : a TodoMVC built with Rails and Turbolinks 3
 
-The goal of this project was primarily to get more familiar and practice with the new [https://github.com/stimulusjs/stimulus](Stimulus) framework.
+The goal of this project was primarily to get more familiar and practice with the new [Stimulus](https://github.com/stimulusjs/stimulus) framework.
 
 ## The concept behind
 
@@ -17,7 +17,7 @@ Once again this is probably not an approach that I would take in production but 
 
 A live demo is available at: https://todomvc-rails-on-stimulus.herokuapp.com/
 
-As a comparison you can also test the Turbolink 3 only live version: https://todomvc-turbolinks.herokuapp.com/
+As a comparison you can also test the Turbolink 3 only: https://todomvc-turbolinks.herokuapp.com/
 
 ## Todo
 
@@ -35,5 +35,7 @@ This is not intended to be a perfect example of how to use Stimulus, Rails and T
 
 ## Credits
 
-lots of inspiration from this great project that got me started
-[https://github.com/nateberkopec/todomvc-turbolinks](A Turbolinks 3 TodoMVC)
+Lots of inspiration from this great project that got me started
+[A Turbolinks 3 TodoMVC](https://github.com/nateberkopec/todomvc-turbolinks)
+
+Many thanks for all Q&A in the Stimulus issues
