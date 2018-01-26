@@ -13,7 +13,7 @@
   <body>
     <div class="link-github" data-turbolinks-permanent>
       <a href="https://github.com/adrienpoly/todomvc_rails_on_stimulus">
-        <img width="32" width="32" src="https://unpkg.com/simple-icons@latest/icons/github.svg" />
+        <%= image_tag asset_pack_path('images/github.svg'), width: 32 %>
       </a>
     </div>
     <%= yield %>
@@ -22,7 +22,6 @@
       <p>Double-click to edit a todo</p>
       <p>Created by <a href="https://github.com/adrienpoly">Adrien Poly</a></p>
       <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-      <p>version 0.9</p>
     </div>
   </body>
 
