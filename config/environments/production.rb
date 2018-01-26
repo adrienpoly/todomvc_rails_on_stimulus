@@ -28,8 +28,8 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
   config.public_file_server.headers = {
-      'Cache-Control' => 'public, max-age=31536000'
-    }
+    'Cache-Control' => 'public, max-age=31536000'
+  }
 
   # Compress JavaScripts and CSS.
   # config.assets.js_compressor = Uglifier.new(harmony: true)
@@ -64,11 +64,9 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
-  if ENV['REDISCLOUD_URL']
-    config.cache_store = :redis_store, ENV['REDISCLOUD_URL'], { expires_in: 1.day }
-    config.action_controller.enable_fragment_cache_logging = true # you can remove this line once you made sure caching works on Heroku
-  end
-  
+
+  config.cache_store = :redis_store, ENV['REDISCLOUD_URL'], { expires_in: 1.day } if ENV['REDISCLOUD_URL']
+
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "todomvc_stimulus_#{Rails.env}"

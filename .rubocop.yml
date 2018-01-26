@@ -1,6 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
-
 AllCops:
   Include:
     - Rakefile
@@ -39,3 +36,7 @@ Style/ClassAndModuleChildren:
 
 Style/Documentation:
   Enabled: false
+
+Style/GlobalVars:
+  Exclude:
+    - 'config/initializers/redis.rb'
