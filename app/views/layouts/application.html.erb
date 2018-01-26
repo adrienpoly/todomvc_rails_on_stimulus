@@ -2,9 +2,13 @@
 <html>
   <head>
     <title>A modest TodoMVC rails app boosted with Stimulus</title>
+    <% if Rails.env.production? %>
     <style>
       <%= raw File.read("public" + asset_pack_path("application.css")) %>
     </style>
+    <% else %>
+      <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <% end %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', async: Rails.env.production? %>
     <meta name=viewport content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">

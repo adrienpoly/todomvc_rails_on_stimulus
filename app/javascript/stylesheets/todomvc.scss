@@ -115,7 +115,7 @@ input[type="checkbox"] {
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 }
 
-#main {
+#todos {
   position: relative;
   z-index: 2;
   border-top: 1px solid #e6e6e6;
@@ -146,35 +146,35 @@ label[for="toggle-all"] {
   color: #737373;
 }
 
-#todos {
+#list-todos {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-#todos li {
+#list-todos li {
   position: relative;
   font-size: 24px;
   border-bottom: 1px solid #ededed;
 }
 
-#todos li:last-child {
+#list-todos li:last-child {
   border-bottom: none;
 }
 
-#todos li.editing {
+#list-todos li.editing {
   border-bottom: none;
   padding: 0;
 }
 
-#todos li.editing .edit {
+#list-todos li.editing .edit {
   display: block;
   width: 506px;
   padding: 13px 17px 12px 17px;
   margin: 0 0 0 43px;
 }
 
-#todos li.editing {
+#list-todos li.editing {
   .toggle,
   label,
   .destroy_todo {
@@ -182,27 +182,27 @@ label[for="toggle-all"] {
   }
 }
 
-#todos li .editing {
+#list-todos li .editing {
   border-bottom: none;
   padding: 0;
 }
 
-#todos li .editing .edit {
+#list-todos li .editing .edit {
   display: block;
   width: 506px;
   padding: 13px 17px 12px 17px;
   margin: 0 0 0 43px;
 }
 
-#todos li .editing .view {
+#list-todos li .editing .view {
   display: none;
 }
 
-#todos li .editing label {
+#list-todos li .editing label {
   display: none;
 }
 
-#todos li .toggle {
+#list-todos li .toggle {
   text-align: center;
   width: 40px;
   /* auto, since non-WebKit browsers doesn't support input styling */
@@ -216,15 +216,15 @@ label[for="toggle-all"] {
   appearance: none;
 }
 
-#todos li .toggle:after {
+#list-todos li .toggle:after {
   content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
 }
 
-#todos li .toggle:checked:after {
+#list-todos li .toggle:checked:after {
   content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
 }
 
-#todos li label {
+#list-todos li label {
   white-space: pre;
   word-break: break-word;
   padding: 15px 60px 15px 15px;
@@ -234,17 +234,17 @@ label[for="toggle-all"] {
   transition: color 0.2s;
 }
 
-#todos li.completed label {
+#list-todos li.completed label {
   color: #d9d9d9;
   text-decoration: line-through;
 }
 
-#todos li label.completed {
+#list-todos li label.completed {
   color: #d9d9d9;
   text-decoration: line-through;
 }
 
-#todos li .destroy {
+#list-todos li .destroy {
   display: none;
   position: absolute;
   top: 0;
@@ -259,27 +259,27 @@ label[for="toggle-all"] {
   transition: color 0.2s ease-out;
 }
 
-#todos li .destroy:hover {
+#list-todos li .destroy:hover {
   color: #af5b5e;
 }
 
-#todos li .destroy:after {
+#list-todos li .destroy:after {
   content: "×";
 }
 
-#todos li:hover .destroy {
+#list-todos li:hover .destroy {
   display: block;
 }
 
-#todos li .edit {
+#list-todos li .edit {
   display: none;
 }
 
-#todos li.editing:last-child {
+#list-todos li.editing:last-child {
   margin-bottom: -1px;
 }
 
-#footer {
+#filters-actions {
   color: #777;
   padding: 10px 15px;
   height: 20px;
@@ -287,7 +287,7 @@ label[for="toggle-all"] {
   border-top: 1px solid #e6e6e6;
 }
 
-#footer:before {
+#filters-actions:before {
   content: "";
   position: absolute;
   right: 0;
@@ -392,11 +392,11 @@ html #clear-completed:active {
 */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   #toggle-all,
-  #todos li .toggle {
+  #list-todos li .toggle {
     background: none;
   }
 
-  #todos li .toggle {
+  #list-todos li .toggle {
     height: 40px;
   }
 
@@ -409,7 +409,7 @@ html #clear-completed:active {
 }
 
 @media (max-width: 430px) {
-  #footer {
+  #filters-actions {
     height: 50px;
   }
 

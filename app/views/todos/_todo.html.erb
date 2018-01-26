@@ -10,15 +10,15 @@
         <%= completed_filter_field %>
       <% end %>
 
-
       <div data-controller="editable" data-target="editable.title" >
         <label class="toggle-me" data-action="dblclick->editable#editOnDbClick"><%= todo.title %></label>
         <%= form_with model: todo,
-        remote: true,
-        data: { target: "editable.input-form" },
-        html: {
-          class: "toggle-me todo-title",
-          style: "display: none" } do |f|%>
+                      remote: true,
+                      data: { target: "editable.input-form" },
+                      html: {
+                        class: "toggle-me todo-title",
+                        style: "display: none" } do |f|%>
+
             <%= f.text_field :title,
                 class: "edit",
                 data: {
@@ -26,7 +26,7 @@
                   target: "editable.input"
                 },
                 autocomplete: "off" %>
-            <% end %>
+        <% end %>
       </div>
 
       <%= form_with model: todo,
@@ -35,10 +35,10 @@
                     method: "delete",
                     html: { class: "destroy_todo" },
                     data: {action: "click->todo#destroy"} do |f| %>
+
         <%= button_tag "", class: "destroy" %>
         <%= completed_filter_field %>
       <% end %>
-
     </div>
   </li>
 <% end %>

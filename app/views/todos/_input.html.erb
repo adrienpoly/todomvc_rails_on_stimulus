@@ -1,5 +1,4 @@
-
-<div id="header">
+<div>
   <h1>todos</h1>
   <%= form_with model: Todo.new, remote: true, authenticity_token: true do |f| %>
     <%= f.text_field :title,

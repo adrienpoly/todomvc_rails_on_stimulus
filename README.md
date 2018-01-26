@@ -3,10 +3,9 @@
 This is a **modest** attempt to create a TodoMVC with Rails, Turbolinks and boost it a bit with Stimulus.
 This project was inspired by [this project](https://github.com/nateberkopec/todomvc-turbolinks) : a TodoMVC built with Rails and Turbolinks 3
 
-
 ## The concept behind
 
-The goal of this project was primarily to get more familiar and practice with the new [Stimulus](https://github.com/stimulusjs/stimulus) framework. 
+The goal of this project was primarily to get more familiar and practice with the new [Stimulus](https://github.com/stimulusjs/stimulus) framework.
 The approach taken in this project is to make most of the actions on the todolist client side with Stimulus controller **to get this crisp and fast feeling of client side rendering**.
 This Todolist preserves the data in a database within the backend. Each action is therefore linked to a call to the backend to update the content in the database. Those calls are form post submission to keep strong parameters (an alternative could be Ajax post).
 As a return from the backend, the page is silently refreshed by Turbolinks. Unless there is a problem persisting the data in the database the refresh is not visible as it is the same as what has already been done by Stimulus controllers.
@@ -24,6 +23,7 @@ As a comparison you can also test the Turbolink 3 only: https://todomvc-turbolin
 🚧 WORK IN PROGRESS
 
 * [x] Fix Turbolinks blinks and path change
+* [x] We are talking about speed here, score a 100 at Google page speed 💯
 * [ ] fix Turbolinks scrolling back to top instead of keeping the current scroll position
 * [ ] Add a new todo client side
 * [ ] Split the Todo controller in smaller controllers that communicate between each others
