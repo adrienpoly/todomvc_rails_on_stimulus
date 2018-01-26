@@ -1,2 +1,1 @@
-import "./github.svg";
-
+import "./github.png";
