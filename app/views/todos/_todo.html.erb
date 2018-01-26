@@ -1,42 +1,44 @@
-<li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-target="todo.task" >
-  <div class="view">
-    <%= form_with model: todo,
-                  remote: true,
-                  authenticity_token: true,
-                  data: { action: "click->todo#toggle" } do |f| %>
-
-      <%= f.check_box :completed, class: "toggle" %>
-      <%= completed_filter_field %>
-    <% end %>
-
-
-    <div data-controller="editable" data-target="editable.title" >
-      <label class="toggle-me" data-action="dblclick->editable#editOnDbClick"><%= todo.title %></label>
+<% cache todo do %>
+  <li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-target="todo.task" >
+    <div class="view">
       <%= form_with model: todo,
-      remote: true,
-      data: { target: "editable.input-form" },
-      html: {
-        class: "toggle-me todo-title",
-        style: "display: none" } do |f|%>
-          <%= f.text_field :title,
-              class: "edit",
-              data: {
-                action: "blur->editable#submitOnBlur keyup->editable#closeOnEsc",
-                target: "editable.input"
-              },
-              autocomplete: "off" %>
-          <% end %>
+                    remote: true,
+                    authenticity_token: true,
+                    data: { action: "click->todo#toggle" } do |f| %>
+
+        <%= f.check_box :completed, class: "toggle" %>
+        <%= completed_filter_field %>
+      <% end %>
+
+      <div data-controller="editable" data-target="editable.title" >
+        <label class="toggle-me" data-action="dblclick->editable#editOnDbClick"><%= todo.title %></label>
+        <%= form_with model: todo,
+                      remote: true,
+                      data: { target: "editable.input-form" },
+                      html: {
+                        class: "toggle-me todo-title",
+                        style: "display: none" } do |f|%>
+
+            <%= f.text_field :title,
+                class: "edit",
+                data: {
+                  action: "blur->editable#submitOnBlur keyup->editable#closeOnEsc",
+                  target: "editable.input"
+                },
+                autocomplete: "off" %>
+        <% end %>
+      </div>
+
+      <%= form_with model: todo,
+                    remote: true,
+                    authenticity_token: true,
+                    method: "delete",
+                    html: { class: "destroy_todo" },
+                    data: {action: "click->todo#destroy"} do |f| %>
+
+        <%= button_tag "", class: "destroy" %>
+        <%= completed_filter_field %>
+      <% end %>
     </div>
-
-    <%= form_with model: todo,
-                  remote: true,
-                  authenticity_token: true,
-                  method: "delete",
-                  html: { class: "destroy_todo" },
-                  data: {action: "click->todo#destroy"} do |f| %>
-      <%= button_tag "", class: "destroy" %>
-      <%= completed_filter_field %>
-    <% end %>
-
-  </div>
-</li>
+  </li>
+<% end %>

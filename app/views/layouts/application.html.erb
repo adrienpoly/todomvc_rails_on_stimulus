@@ -2,8 +2,14 @@
 <html>
   <head>
     <title>A modest TodoMVC rails app boosted with Stimulus</title>
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', async: true %>
+    <% if Rails.env.production? %>
+    <style>
+      <%= raw File.read("public" + asset_pack_path("application.css")) %>
+    </style>
+    <% else %>
+      <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <% end %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', async: Rails.env.production? %>
     <meta name=viewport content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="turbolinks-cache-control" content="no-preview">
@@ -13,7 +19,7 @@
   <body>
     <div class="link-github" data-turbolinks-permanent>
       <a href="https://github.com/adrienpoly/todomvc_rails_on_stimulus">
-        <img width="32" width="32" src="https://unpkg.com/simple-icons@latest/icons/github.svg" />
+        <%= image_tag asset_pack_path('images/github.png'), width: 32 %>
       </a>
     </div>
     <%= yield %>
@@ -22,7 +28,6 @@
       <p>Double-click to edit a todo</p>
       <p>Created by <a href="https://github.com/adrienpoly">Adrien Poly</a></p>
       <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-      <p>version 0.9</p>
     </div>
   </body>
 
