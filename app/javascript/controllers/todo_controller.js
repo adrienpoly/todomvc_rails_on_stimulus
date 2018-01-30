@@ -8,6 +8,8 @@ const COMPLETED = "completed";
 const ACTIVE = "active";
 
 export default class extends Controller {
+  static targets = ["filter", "task", "activeNumber", "toggleAll"]
+  
   connect() {
     this.initializeFilter();
     this.renderTodos();
@@ -105,11 +107,11 @@ export default class extends Controller {
   }
 
   set isToggleAll(bool) {
-    this.data.set("toggle-all", bool);
+    this.data.set("toggleAll", bool);
   }
 
   get isToggleAll() {
-    return this.data.get("toggle-all") === "true";
+    return this.data.get("toggleAll") === "true";
   }
 
   get filter() {
@@ -121,7 +123,8 @@ export default class extends Controller {
   }
 
   get displayActive() {
-    return this.targets.find("active-number");
+    return this.activeNumberTarget
+    // return this.targets.find("active-number");
   }
 
   get active() {
@@ -129,11 +132,11 @@ export default class extends Controller {
   }
 
   get taskElements() {
-    return this.targets.findAll("task");
+    return this.taskTargets;
   }
 
   get filterElements() {
-    return this.targets.findAll("filter");
+    return this.filterTargets;
   }
 
   get completedTaskElements() {

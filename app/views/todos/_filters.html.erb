@@ -1,5 +1,5 @@
 <div id="filters-actions" class="<%= "hidden" unless @todos.any? %>">
-  <span id="todo-count" data-target="todo.active-number">
+  <span id="todo-count" data-target="todo.activeNumber">
     <%= pluralize @todos.reject(&:completed).size, "item" %> left
   </span>
   <ul id="filters">
@@ -32,7 +32,7 @@
       <% @todos.select { |t| t.completed }.map do |todo| %>
         <%= hidden_field_tag "ids[]", todo.id %>
       <% end %>
-      
+
       <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "clear-completed"} %>
       <%= completed_filter_field %>
     <% end %>

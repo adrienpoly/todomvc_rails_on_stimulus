@@ -1,4 +1,4 @@
-<div id="todoapp" data-controller="todo" data-todo-toggle-all="<%= @todos.any? && @todos.all?(&:completed) %>">
+<div id="todoapp" data-controller="todo" data-todo-toggleAll="<%= @todos.any? && @todos.all?(&:completed) %>">
   <%= cache @todos do %>
     <%= render 'input' %>
     <div id="todos">
