@@ -18,7 +18,7 @@ class TodosController < ApplicationController
   end
 
   def update_many
-    Todo.where(id: params[:ids]).update_attributes(todo_params.to_h)
+    Todo.where(id: params[:ids]).update_all(todo_params.to_h)
     load_and_render_index
   end
 
