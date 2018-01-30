@@ -25,21 +25,23 @@ export default class extends Controller {
         : completedParam === "true" ? COMPLETED : ACTIVE;
   }
 
-  toggle(_event, form) {
-    const todo = form.closest("li");
+  toggle(event) {
+    const todo = event.target.closest("li");
+    const form = event.target.closest("form");
     Rails.fire(form, "submit");
     todo.classList.toggle("completed");
     this.setActiveNumber();
     this.renderTodos();
   }
 
-  destroy(_event, form) {
-    const todo = form.closest("li");
+  destroy(event) {
+    const todo = event.target.closest("li");
     todo.classList.add("hidden", "completed");
     this.setActiveNumber();
   }
 
-  toggleAll(_event, form) {
+  toggleAll(event) {
+    const form = event.target.closest("form");
     Rails.fire(form, "submit");
     this.isToggleAll = !this.isToggleAll;
     this.taskElements.forEach(task => {
@@ -55,13 +57,11 @@ export default class extends Controller {
     });
   }
 
-  selectFilter(event, target) {
-    this.filter = target.name;
+  selectFilter(event) {
+    this.filter = event.target.name;
     this.renderTodos();
     this.renderFilters();
   }
-
-  private;
 
   setActiveNumber() {
     const DOMPurify = createDOMPurify(window);
