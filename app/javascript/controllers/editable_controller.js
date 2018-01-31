@@ -5,7 +5,7 @@ export default class extends Controller {
   submitOnBlur(event) {
     const form = event.target.closest("form");
     Rails.fire(form, "submit");
-    target.closest("li").classList.remove("editing");
+    event.target.closest("li").classList.remove("editing");
     this.targets.find("input-form").style.display = "none";
   }
 
