@@ -9,7 +9,7 @@ const ACTIVE = "active";
 
 export default class extends Controller {
   static targets = ["filter", "task", "activeNumber", "toggleAll"]
-  
+
   connect() {
     this.initializeFilter();
     this.renderTodos();
@@ -123,8 +123,7 @@ export default class extends Controller {
   }
 
   get displayActive() {
-    return this.activeNumberTarget
-    // return this.targets.find("active-number");
+    return this.activeNumberTarget;
   }
 
   get active() {
