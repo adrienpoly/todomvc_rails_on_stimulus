@@ -29,7 +29,7 @@ export default class extends Controller {
   }
 
   handleSubmit(form, callback = () => {}) {
-    const todoController = this.controllerByIdentifier("todo");
+    const todoController = this.getControllerByIdentifier("todo");
     const success = event => {
       const todosOld = document.querySelector("#todos");
       const todosNew = event.detail[0].querySelector("#todos");
@@ -42,7 +42,7 @@ export default class extends Controller {
     form.addEventListener("ajax:success", success);
   }
 
-  controllerByIdentifier(identifier) {
+  getControllerByIdentifier(identifier) {
     return this.application.controllers.find(controller => {
       return controller.context.identifier === identifier;
     });
