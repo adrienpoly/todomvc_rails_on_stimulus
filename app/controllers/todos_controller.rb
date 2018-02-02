@@ -50,7 +50,6 @@ class TodosController < ApplicationController
 
   def load_todos
     @todos = Todo.belonging_to(session_user).order(created_at: :asc)
-    fresh_when(@todos)
     # filtering_params.each do |key, value|
     # @todos = @todos.public_send(key, value) if value.present?
     # end
