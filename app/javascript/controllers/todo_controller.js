@@ -29,7 +29,7 @@ export default class extends Controller {
 
   create() {
     const form = this.targets.find("input-form");
-    var self = this;
+    const self = this;
     this.handleSubmit(
       form,
       () => {
@@ -103,7 +103,7 @@ export default class extends Controller {
   }
 
   handleSubmit(form, callback = () => {}) {
-    var self = this;
+    const self = this;
     const success = event => {
       const todosOld = document.querySelector("#todos");
       const todosNew = event.detail[0].querySelector("#todos");
