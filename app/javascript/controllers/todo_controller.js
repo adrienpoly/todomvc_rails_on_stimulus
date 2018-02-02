@@ -34,7 +34,7 @@ export default class extends Controller {
       form,
       () => {
           const todoTitle = self.targets.find("todo-title");
-          todoTitle.value = '';
+          todoTitle.value = "";
           todoTitle.focus();
     });
   }

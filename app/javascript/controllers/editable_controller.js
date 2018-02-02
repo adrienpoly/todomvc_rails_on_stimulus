@@ -29,7 +29,7 @@ export default class extends Controller {
   }
 
   handleSubmit(form, callback = () => {}) {
-    const todoController = this.controllerByIdentifier('todo');
+    const todoController = this.controllerByIdentifier("todo");
     const success = event => {
       const todosOld = document.querySelector("#todos");
       const todosNew = event.detail[0].querySelector("#todos");
