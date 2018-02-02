@@ -2,7 +2,10 @@
               method: :put,
               remote: true,
               id: "update_many_todos",
-              data: {action: "change->todo#toggleAll"},
+              data: {
+                type: "html",
+                action: "change->todo#toggleAll"
+              },
               authenticity_token: true do %>
 
   <% @todos.map do |todo| %>

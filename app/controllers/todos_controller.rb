@@ -41,7 +41,7 @@ class TodosController < ApplicationController
   def load_and_render_index
     load_todos
     @params = params[:completed_filter].blank? ? '' : { completed: params[:completed_filter] }
-    render :index
+    render :index, layout: false
   end
 
   # def filtering_params

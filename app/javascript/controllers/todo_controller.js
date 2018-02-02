@@ -27,30 +27,34 @@ export default class extends Controller {
         : completedParam === "true" ? COMPLETED : ACTIVE;
   }
 
+  create() {
+    const form = this.targets.find("input-form");
+    var self = this;
+    this.handleSubmit(
+      form,
+      () => {
+          const todoTitle = self.targets.find("todo-title");
+          todoTitle.value = '';
+          todoTitle.focus();
+    });
+  }
+
   toggle(event) {
     const todo = event.target.closest("li");
     const form = event.target.closest("form");
+    this.handleSubmit(form);
     Rails.fire(form, "submit");
-    todo.classList.toggle("completed");
-    this.setActiveNumber();
-    this.renderTodos();
   }
 
   destroy(event) {
-    const todo = event.target.closest("li");
-    todo.classList.add("hidden", "completed");
-    this.setActiveNumber();
+    const form = event.target.closest("form");
+    this.handleSubmit(form);
   }
 
   toggleAll(event) {
     const form = event.target.closest("form");
+    this.handleSubmit(form);
     Rails.fire(form, "submit");
-    this.isToggleAll = !this.isToggleAll;
-    this.taskElements.forEach(task => {
-      task.classList.toggle("completed", this.isToggleAll);
-      task.querySelector(".toggle").checked = this.isToggleAll;
-    });
-    this.setActiveNumber();
   }
 
   destroyAll() {
@@ -96,6 +100,21 @@ export default class extends Controller {
     this.filterElements.forEach(filter => {
       filter.classList.toggle("selected", filter.name === this.filter);
     });
+  }
+
+  handleSubmit(form, callback = () => {}) {
+    var self = this;
+    const success = event => {
+      const todosOld = document.querySelector("#todos");
+      const todosNew = event.detail[0].querySelector("#todos");
+      todosOld.parentNode.replaceChild(todosNew, todosOld);
+
+      callback();
+      self.connect();
+      self.setActiveNumber();
+      form.removeEventListener("ajax:success", success);
+    };
+    form.addEventListener("ajax:success", success);
   }
 
   set active(value) {
