@@ -119,10 +119,8 @@ export default class extends ApplicationController {
       self.connect();
       self.setActiveNumber();
       callback();
-
-      form.removeEventListener("ajax:success", success);
     };
-    form.addEventListener("ajax:success", success);
+    form.addEventListener("ajax:success", success, {once: true});
   }
 
   set active(value) {

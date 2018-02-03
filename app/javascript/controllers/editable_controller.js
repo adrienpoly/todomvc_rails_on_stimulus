@@ -34,9 +34,7 @@ export default class extends ApplicationController {
       todoOld.parentNode.replaceChild(todoNew, todoOld);
 
       callback();
-
-      form.removeEventListener("ajax:success", success);
     };
-    form.addEventListener("ajax:success", success);
+    form.addEventListener("ajax:success", success, {once: true});
   }
 }
