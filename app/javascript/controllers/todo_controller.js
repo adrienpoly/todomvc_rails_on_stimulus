@@ -36,6 +36,7 @@ export default class extends ApplicationController {
         const todoTitle = self.targets.find("todo-title");
         todoTitle.value = "";
         todoTitle.focus();
+        document.querySelector("#filters-actions").classList.remove("hidden");
       }
     );
   }
