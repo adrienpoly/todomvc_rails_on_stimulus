@@ -34,8 +34,9 @@ export default class extends ApplicationController {
       const todoNew = event.detail[0].querySelector("li");
       todoOld.parentNode.replaceChild(todoNew, todoOld);
 
-      callback();
       todoController.connect();
+      callback();
+
       form.removeEventListener("ajax:success", success);
     };
     form.addEventListener("ajax:success", success);

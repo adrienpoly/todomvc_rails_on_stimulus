@@ -114,9 +114,10 @@ export default class extends ApplicationController {
       const todosNew = event.detail[0].querySelector("#todos");
       todosOld.parentNode.replaceChild(todosNew, todosOld);
 
-      callback();
       self.connect();
       self.setActiveNumber();
+      callback();
+
       form.removeEventListener("ajax:success", success);
     };
     form.addEventListener("ajax:success", success);
