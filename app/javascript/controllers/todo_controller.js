@@ -44,7 +44,7 @@ export default class extends ApplicationController {
     const form = event.target.closest("form");
 
     const self = this;
-    const editableController = this.getControllerByIdentifier('editable');
+    const editableController = this.getControllerByIdentifier("editable");
     editableController.handleSubmit(form, () => {
       self.setActiveNumber();
     });
