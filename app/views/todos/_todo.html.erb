@@ -1,5 +1,5 @@
 <% cache todo do %>
-  <li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-target="todo.task" >
+  <li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %>" data-target="todo.task" >
     <div class="view">
       <%= form_with model: todo,
                     remote: true,

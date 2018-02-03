@@ -28,13 +28,11 @@ export default class extends ApplicationController {
   }
 
   handleSubmit(form, callback = () => {}) {
-    const todoController = this.getControllerByIdentifier("todo");
     const success = event => {
       const todoOld = form.closest("li");
       const todoNew = event.detail[0].querySelector("li");
       todoOld.parentNode.replaceChild(todoNew, todoOld);
 
-      todoController.connect();
       callback();
 
       form.removeEventListener("ajax:success", success);
