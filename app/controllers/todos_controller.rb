@@ -19,7 +19,7 @@ class TodosController < ApplicationController
   end
 
   def update_many
-    Todo.where(id: params[:ids]).update_all(todo_params.to_h.merge(updated_at: DateTime.now))
+    Todo.where(id: params[:ids]).update_all(todo_params.to_h.merge(updated_at: Time.zone.now))
     load_and_render_index
   end
 
