@@ -3,8 +3,12 @@ import Rails from "rails-ujs";
 
 export default class extends ApplicationController {
   submitOnBlur(event) {
-    const form = event.target.closest("form");
-    Rails.fire(form, "submit");
+    setTimeout(() => {
+      if (document.body.contains(event.target)) {
+        const form = event.target.closest("form");
+        Rails.fire(form, "submit");
+      }
+    });
     event.target.closest("li").classList.remove("editing");
     this.targets.find("input-form").style.display = "none";
   }
