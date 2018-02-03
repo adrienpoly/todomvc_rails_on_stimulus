@@ -48,6 +48,7 @@ export default class extends ApplicationController {
     const editableController = this.getControllerByIdentifier("editable");
     editableController.handleSubmit(form, () => {
       self.setActiveNumber();
+      self.renderTodos();
     });
     Rails.fire(form, "submit");
   }
