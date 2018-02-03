@@ -1,7 +1,7 @@
-import { Controller } from "stimulus";
+import { ApplicationController } from "stimulus-support";
 import Rails from "rails-ujs";
 
-export default class extends Controller {
+export default class extends ApplicationController {
   submitOnBlur(event) {
     const form = event.target.closest("form");
     Rails.fire(form, "submit");
@@ -39,11 +39,5 @@ export default class extends Controller {
       form.removeEventListener("ajax:success", success);
     };
     form.addEventListener("ajax:success", success);
-  }
-
-  getControllerByIdentifier(identifier) {
-    return this.application.controllers.find(controller => {
-      return controller.context.identifier === identifier;
-    });
   }
 }

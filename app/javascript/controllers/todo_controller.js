@@ -1,4 +1,4 @@
-import { Controller } from "stimulus";
+import { ApplicationController } from "stimulus-support";
 import pluralize from "pluralize";
 import Rails from "rails-ujs";
 import createDOMPurify from "dompurify";
@@ -7,7 +7,7 @@ const ALL = "all";
 const COMPLETED = "completed";
 const ACTIVE = "active";
 
-export default class extends Controller {
+export default class extends ApplicationController {
   static targets = ["filter", "task", "activeNumber", "toggleAll"]
 
   connect() {
