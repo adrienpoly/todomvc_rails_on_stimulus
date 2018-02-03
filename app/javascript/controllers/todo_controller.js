@@ -8,7 +8,7 @@ const COMPLETED = "completed";
 const ACTIVE = "active";
 
 export default class extends ApplicationController {
-  static targets = ["filter", "task", "activeNumber", "toggleAll"]
+  static targets = ["filter", "task", "activeNumber", "toggleAll"];
 
   connect() {
     this.initializeFilter();
@@ -33,14 +33,14 @@ export default class extends ApplicationController {
     this.handleSubmit(
       form,
       () => {
-          const todoTitle = self.targets.find("todo-title");
-          todoTitle.value = "";
-          todoTitle.focus();
-    });
+        const todoTitle = self.targets.find("todo-title");
+        todoTitle.value = "";
+        todoTitle.focus();
+      }
+    );
   }
 
   toggle(event) {
-    const todo = event.target.closest("li");
     const form = event.target.closest("form");
 
     const self = this;
