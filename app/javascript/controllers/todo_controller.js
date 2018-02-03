@@ -42,7 +42,12 @@ export default class extends ApplicationController {
   toggle(event) {
     const todo = event.target.closest("li");
     const form = event.target.closest("form");
-    this.handleSubmit(form);
+
+    const self = this;
+    const editableController = this.getControllerByIdentifier('editable');
+    editableController.handleSubmit(form, () => {
+      self.setActiveNumber();
+    });
     Rails.fire(form, "submit");
   }
 
