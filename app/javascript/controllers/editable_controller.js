@@ -10,8 +10,7 @@ export default class extends Controller {
   }
 
   update(event) {
-    const form = event.target;
-    this.handleSubmit(form);
+    this.handleSubmit(event.target);
   }
 
   closeOnEsc(event) {
@@ -31,9 +30,9 @@ export default class extends Controller {
   handleSubmit(form, callback = () => {}) {
     const todoController = this.getControllerByIdentifier("todo");
     const success = event => {
-      const todosOld = document.querySelector("#todos");
-      const todosNew = event.detail[0].querySelector("#todos");
-      todosOld.parentNode.replaceChild(todosNew, todosOld);
+      const todoOld = form.closest("li");
+      const todoNew = event.detail[0].querySelector("li");
+      todoOld.parentNode.replaceChild(todoNew, todoOld);
 
       callback();
       todoController.connect();
