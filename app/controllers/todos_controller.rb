@@ -19,7 +19,7 @@ class TodosController < ApplicationController
   end
 
   def update_many
-    Todo.where(id: params[:ids]).update_all(todo_params.to_h)
+    Todo.where(id: params[:ids]).update_all(todo_params.to_h.merge(updated_at: DateTime.now))
     load_and_render_index
   end
 
@@ -51,6 +51,7 @@ class TodosController < ApplicationController
 
   def load_todos
     @todos = Todo.belonging_to(session_user).order(created_at: :asc)
+    fresh_when(@todos)
     # filtering_params.each do |key, value|
     # @todos = @todos.public_send(key, value) if value.present?
     # end
