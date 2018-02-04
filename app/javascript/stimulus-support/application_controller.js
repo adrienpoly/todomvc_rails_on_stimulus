@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import Turbolinks from "turbolinks";
 
 export class ApplicationController extends Controller {
   handleRemote(element, successCallback) {

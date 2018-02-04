@@ -1,5 +1,6 @@
 import { ApplicationController } from "stimulus-support";
 import pluralize from "pluralize";
+import Turbolinks from "turbolinks";
 import Rails from "rails-ujs";
 import createDOMPurify from "dompurify";
 
