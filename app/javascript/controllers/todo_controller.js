@@ -43,6 +43,7 @@ export default class extends ApplicationController {
     this.handleRemote(form, successEvent => {
       const editableController = this.getControllerByIdentifier("editable");
       editableController.replaceTodo(successEvent);
+      this.renderTodos();
       this.setActiveNumber();
     });
     Rails.fire(form, "submit");
