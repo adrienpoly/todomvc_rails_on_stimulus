@@ -67,6 +67,7 @@ export default class extends ApplicationController {
     this.completedTaskElements.forEach(task => {
       task.classList.add("hidden");
     });
+    Turbolinks.clearCache();
   }
 
   selectFilter(event) {

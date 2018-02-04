@@ -5,6 +5,7 @@ export class ApplicationController extends Controller {
     if (successCallback && typeof successCallback === "function") {
       const success = event => {
         successCallback.bind(this)(event);
+        Turbolinks.clearCache();
       };
       element.addEventListener("ajax:success", success, {once: true});
     }
