@@ -14,7 +14,7 @@ export default class extends ApplicationController {
   }
 
   update(event) {
-    this.handleSubmit(event.target);
+    this.handleRemote(event.target, this.replaceTodo);
   }
 
   closeOnEsc(event) {
@@ -31,14 +31,9 @@ export default class extends ApplicationController {
     this.targets.find("input").focus();
   }
 
-  handleSubmit(form, callback = () => {}) {
-    const success = event => {
-      const todoOld = form.closest("li");
-      const todoNew = event.detail[0].querySelector("li");
-      todoOld.parentNode.replaceChild(todoNew, todoOld);
-
-      callback();
-    };
-    form.addEventListener("ajax:success", success, {once: true});
+  replaceTodo(event) {
+    const todoOld = event.target.closest("li");
+    const todoNew = event.detail[0].querySelector("li");
+    todoOld.parentNode.replaceChild(todoNew, todoOld);
   }
 }

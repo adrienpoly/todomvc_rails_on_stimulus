@@ -27,40 +27,39 @@ export default class extends ApplicationController {
         : completedParam === "true" ? COMPLETED : ACTIVE;
   }
 
-  create() {
-    const form = this.targets.find("input-form");
-    const self = this;
-    this.handleSubmit(
-      form,
-      () => {
-        const todoTitle = self.targets.find("todo-title");
-        todoTitle.value = "";
-        todoTitle.focus();
-        document.querySelector("#filters-actions").classList.remove("hidden");
-      }
-    );
+  create(event) {
+    const form = event.target.closest("form");
+    this.handleRemote(form, (successEvent, self) => {
+      self.replaceTodos(successEvent, self);
+      const todoTitle = self.targets.find("todo-title");
+      todoTitle.value = "";
+      todoTitle.focus();
+      document.querySelector("#filters-actions").classList.remove("hidden");
+    });
   }
 
   toggle(event) {
     const form = event.target.closest("form");
-
-    const self = this;
-    const editableController = this.getControllerByIdentifier("editable");
-    editableController.handleSubmit(form, () => {
+    this.handleRemote(form, (successEvent, self) => {
+      const editableController = this.getControllerByIdentifier("editable");
+      editableController.replaceTodo(successEvent);
       self.setActiveNumber();
-      self.renderTodos();
     });
     Rails.fire(form, "submit");
   }
 
   destroy(event) {
     const form = event.target.closest("form");
-    this.handleSubmit(form);
+    const todo = event.target.closest("li");
+    this.handleRemote(form, (successEvent, self) => {
+      todo.remove();
+      self.setActiveNumber();
+    });
   }
 
   toggleAll(event) {
     const form = event.target.closest("form");
-    this.handleSubmit(form);
+    this.handleRemote(form, this.replaceTodos);
     Rails.fire(form, "submit");
   }
 
@@ -109,18 +108,13 @@ export default class extends ApplicationController {
     });
   }
 
-  handleSubmit(form, callback = () => {}) {
-    const self = this;
-    const success = event => {
-      const todosOld = document.querySelector("#todos");
-      const todosNew = event.detail[0].querySelector("#todos");
-      todosOld.parentNode.replaceChild(todosNew, todosOld);
+  replaceTodos(event, self) {
+    const todosOld = document.querySelector("#todos");
+    const todosNew = event.detail[0].querySelector("#todos");
+    todosOld.parentNode.replaceChild(todosNew, todosOld);
 
-      self.connect();
-      self.setActiveNumber();
-      callback();
-    };
-    form.addEventListener("ajax:success", success, {once: true});
+    self.connect();
+    self.setActiveNumber();
   }
 
   set active(value) {
