@@ -29,9 +29,9 @@ export default class extends ApplicationController {
 
   create(event) {
     const form = event.target.closest("form");
-    this.handleRemote(form, (successEvent, self) => {
-      self.replaceTodos(successEvent, self);
-      const todoTitle = self.targets.find("todo-title");
+    this.handleRemote(form, successEvent => {
+      this.replaceTodos(successEvent);
+      const todoTitle = this.targets.find("todo-title");
       todoTitle.value = "";
       todoTitle.focus();
       document.querySelector("#filters-actions").classList.remove("hidden");
@@ -40,10 +40,10 @@ export default class extends ApplicationController {
 
   toggle(event) {
     const form = event.target.closest("form");
-    this.handleRemote(form, (successEvent, self) => {
+    this.handleRemote(form, successEvent => {
       const editableController = this.getControllerByIdentifier("editable");
       editableController.replaceTodo(successEvent);
-      self.setActiveNumber();
+      this.setActiveNumber();
     });
     Rails.fire(form, "submit");
   }
@@ -51,9 +51,9 @@ export default class extends ApplicationController {
   destroy(event) {
     const form = event.target.closest("form");
     const todo = event.target.closest("li");
-    this.handleRemote(form, (successEvent, self) => {
+    this.handleRemote(form, successEvent => {
       todo.remove();
-      self.setActiveNumber();
+      this.setActiveNumber();
     });
   }
 
@@ -108,13 +108,13 @@ export default class extends ApplicationController {
     });
   }
 
-  replaceTodos(event, self) {
+  replaceTodos(event) {
     const todosOld = document.querySelector("#todos");
     const todosNew = event.detail[0].querySelector("#todos");
     todosOld.parentNode.replaceChild(todosNew, todosOld);
 
-    self.connect();
-    self.setActiveNumber();
+    this.connect();
+    this.setActiveNumber();
   }
 
   set active(value) {

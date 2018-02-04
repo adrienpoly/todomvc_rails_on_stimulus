@@ -4,7 +4,7 @@ export class ApplicationController extends Controller {
   handleRemote(element, successCallback) {
     if (successCallback && typeof successCallback === "function") {
       const success = event => {
-        successCallback(event, this);
+        successCallback.bind(this)(event);
       };
       element.addEventListener("ajax:success", success, {once: true});
     }
