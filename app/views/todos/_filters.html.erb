@@ -6,7 +6,7 @@
     <li>
       <%= link_to "All",
             root_path,
-            data: { action: "click->todo#selectFilter", target: "todo.filter" },
+            data: { action: "todo#selectFilter", target: "todo.filter" },
             name: "all",
             class: "selected" %>
     </li>
@@ -14,13 +14,13 @@
       <%= link_to "Active",
             root_path({completed: false}),
             name: "active",
-            data: { action: "click->todo#selectFilter", target: "todo.filter" } %>
+            data: { action: "todo#selectFilter", target: "todo.filter" } %>
     </li>
     <li>
       <%= link_to "Completed",
             root_path({completed: true}),
             name: "completed",
-            data: { action: "click->todo#selectFilter", target: "todo.filter" } %>
+            data: { action: "todo#selectFilter", target: "todo.filter" } %>
     </li>
   </ul>
   <% if @todos.select { |t| t.completed }.size > 0 %>
@@ -33,7 +33,7 @@
         <%= hidden_field_tag "ids[]", todo.id %>
       <% end %>
 
-      <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "clear-completed"} %>
+      <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "todo.clear-completed"} %>
       <%= completed_filter_field %>
     <% end %>
   <% end %>

@@ -4,12 +4,9 @@
       <%= form_with model: todo,
                     remote: true,
                     authenticity_token: true,
-                    data: {
-                      type: "html",
-                      action: "click->todo#toggle"
-                    } do |f| %>
+                    data: { type: "html" } do |f| %>
 
-        <%= f.check_box :completed, class: "toggle" %>
+        <%= f.check_box :completed, data: { action: "todo#toggle" }, class: "toggle" %>
         <%= completed_filter_field %>
       <% end %>
 

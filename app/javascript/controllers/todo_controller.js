@@ -51,7 +51,7 @@ export default class extends ApplicationController {
   }
 
   destroy(event) {
-    const form = event.target.closest("form");
+    const form = event.target;
     const todo = event.target.closest("li");
     this.handleRemote(form, successEvent => {
       todo.remove();
