@@ -23,18 +23,18 @@
             data: { action: "todo#selectFilter", target: "todo.filter" } %>
     </li>
   </ul>
-  <% if @todos.select { |t| t.completed }.size > 0 %>
-    <%= form_with url: destroy_many_todos_path,
-                  remote: true,
-                  authenticity_token: true,
-                  method: :delete do %>
+  <%= form_with url: destroy_many_todos_path,
+                remote: true,
+                authenticity_token: true,
+                method: :delete,
+                id: "destroy_many_todos",
+                class: ("hidden" unless @todos.select { |t| t.completed }.size > 0) do %>
 
-      <% @todos.select { |t| t.completed }.map do |todo| %>
-        <%= hidden_field_tag "ids[]", todo.id %>
-      <% end %>
-
-      <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "todo.clear-completed"} %>
-      <%= completed_filter_field %>
+    <% @todos.select { |t| t.completed }.map do |todo| %>
+      <%= hidden_field_tag "ids[]", todo.id %>
     <% end %>
+
+    <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "todo.clear-completed"} %>
+    <%= completed_filter_field %>
   <% end %>
 </div>

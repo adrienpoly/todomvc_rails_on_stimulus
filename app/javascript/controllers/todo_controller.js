@@ -55,6 +55,7 @@ export default class extends ApplicationController {
     const todo = event.target.closest("li");
     this.handleRemote(form, successEvent => {
       todo.remove();
+      this.renderClearCompleted();
       this.setActiveNumber();
     });
   }
@@ -103,12 +104,20 @@ export default class extends ApplicationController {
         );
       }
     });
+    this.renderClearCompleted();
   }
 
   renderFilters() {
     this.filterElements.forEach(filter => {
       filter.classList.toggle("selected", filter.name === this.filter);
     });
+  }
+
+  renderClearCompleted() {
+    document.querySelector("#destroy_many_todos").classList.toggle(
+      "hidden",
+      this.completedTaskElements.length === 0
+    );
   }
 
   replaceTodos(event) {
