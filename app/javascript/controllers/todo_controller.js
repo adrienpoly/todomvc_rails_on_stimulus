@@ -114,10 +114,23 @@ export default class extends ApplicationController {
   }
 
   renderClearCompleted() {
-    document.querySelector("#destroy_many_todos").classList.toggle(
+    const DOMPurify = createDOMPurify(window);
+    const renderClearForm = document.querySelector("#destroy_many_todos");
+    renderClearForm.classList.toggle(
       "hidden",
       this.completedTaskElements.length === 0
     );
+
+    const oldHiddenIds = renderClearForm.querySelectorAll("input[type='hidden'][name='ids[]']");
+    oldHiddenIds.forEach(hiddenId => hiddenId.remove());
+
+    const hiddenIdTemplate = renderClearForm.querySelector("input[type='hidden'][name='template_ids[]']");
+    this.completedTaskElements.forEach(element => {
+      const newHiddenId = hiddenIdTemplate.cloneNode();
+      newHiddenId.setAttribute("name", "ids[]");
+      newHiddenId.value = DOMPurify.sanitize(element.getAttribute("data-id"));
+      renderClearForm.append(newHiddenId);
+    });
   }
 
   replaceTodos(event) {

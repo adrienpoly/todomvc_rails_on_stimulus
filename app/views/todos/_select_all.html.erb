@@ -6,7 +6,7 @@
               authenticity_token: true do %>
 
   <% @todos.map do |todo| %>
-    <%= hidden_field_tag "ids[]", todo.id %>
+    <%= hidden_field_tag "ids[]", todo.id, id: nil %>
     <%= completed_filter_field %>
   <% end %>
 

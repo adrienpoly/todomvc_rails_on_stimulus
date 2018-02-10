@@ -1,0 +1,15 @@
+<%= form_with url: destroy_many_todos_path,
+              remote: true,
+              authenticity_token: true,
+              method: :delete,
+              id: "destroy_many_todos",
+              class: ("hidden" unless @todos.select { |t| t.completed }.size > 0) do %>
+
+  <% @todos.select { |t| t.completed }.map do |todo| %>
+    <%= hidden_field_tag "ids[]", todo.id, id: nil %>
+  <% end %>
+  <%= hidden_field_tag "template_ids[]", nil, id: nil %>
+
+  <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "todo.clear-completed"} %>
+  <%= completed_filter_field %>
+<% end %>
