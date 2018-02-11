@@ -7,8 +7,11 @@
 
   <% @todos.map do |todo| %>
     <%= hidden_field_tag "ids[]", todo.id, id: nil %>
-    <%= completed_filter_field %>
   <% end %>
+
+  <%= hidden_field_tag "template_ids[]", nil, id: nil %>
+
+  <%= completed_filter_field %>
 
   <%= check_box :todo, :completed, checked: @todos.any? && @todos.all?(&:completed),
                 id: "toggle-all", data: { action: "todo#toggleAll" } %>

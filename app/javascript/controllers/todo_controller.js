@@ -55,6 +55,7 @@ export default class extends ApplicationController {
     const todo = event.target.closest("li");
     this.handleRemote(form, successEvent => {
       todo.remove();
+      this.renderSelectAll();
       this.renderClearCompleted();
       this.setActiveNumber();
     });
@@ -104,6 +105,7 @@ export default class extends ApplicationController {
         );
       }
     });
+    this.renderSelectAll();
     this.renderClearCompleted();
   }
 
@@ -114,23 +116,41 @@ export default class extends ApplicationController {
   }
 
   renderClearCompleted() {
-    const DOMPurify = createDOMPurify(window);
-    const renderClearForm = document.querySelector("#destroy_many_todos");
-    renderClearForm.classList.toggle(
-      "hidden",
-      this.completedTaskElements.length === 0
-    );
+    const form = document.querySelector("#destroy_many_todos");
+    this.renderHiddenIds(form, this.completedTaskElements);
+  }
 
-    const oldHiddenIds = renderClearForm.querySelectorAll("input[type='hidden'][name='ids[]']");
+  renderSelectAll() {
+    const form = document.querySelector("#update_many_todos");
+    this.renderHiddenIds(form);
+    const toggleAll = form.querySelector("#toggle-all");
+    toggleAll.checked = this.taskElements.length === this.completedTaskElements.length;
+  }
+
+  renderHiddenIds(form, tasks = this.taskElements) {
+    const DOMPurify = createDOMPurify(window);
+    form.classList.toggle(
+      "hidden",
+      tasks.length === 0
+    );
+    const oldHiddenIds = form.querySelectorAll("input[type='hidden'][name='ids[]']");
     oldHiddenIds.forEach(hiddenId => hiddenId.remove());
 
-    const hiddenIdTemplate = renderClearForm.querySelector("input[type='hidden'][name='template_ids[]']");
-    this.completedTaskElements.forEach(element => {
+    const hiddenIdTemplate = form.querySelector("input[type='hidden'][name='template_ids[]']");
+    tasks.forEach(element => {
       const newHiddenId = hiddenIdTemplate.cloneNode();
       newHiddenId.setAttribute("name", "ids[]");
       newHiddenId.value = DOMPurify.sanitize(element.getAttribute("data-id"));
-      renderClearForm.append(newHiddenId);
+      form.append(newHiddenId);
     });
+    const completedFilter = form.querySelector("[name='completed_filter']");
+    let value;
+    if (this.filter === COMPLETED) {
+      value = true;
+    } else if (this.filter === ACTIVE) {
+      value = false;
+    }
+    completedFilter.value = value;
   }
 
   replaceTodos(event) {
