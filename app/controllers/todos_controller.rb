@@ -13,23 +13,25 @@ class TodosController < ApplicationController
   end
 
   def update
-    todo = Todo.find(params[:id])
+    todo = Todo.belonging_to(session_user).find(params[:id])
     todo.update(todo_params.to_h)
     render todo
   end
 
   def update_many
-    Todo.where(id: params[:ids]).update_all(todo_params.to_h.merge(updated_at: Time.zone.now))
+    Todo.belonging_to(session_user)
+        .where(id: params[:ids])
+        .update_all(todo_params.to_h.merge(updated_at: Time.zone.now))
     load_and_render_index
   end
 
   def destroy
-    Todo.find_by(id: params[:id]).try(:destroy)
+    Todo.belonging_to(session_user).find_by(id: params[:id]).try(:destroy)
     load_and_render_index
   end
 
   def destroy_many
-    Todo.where(id: params[:ids]).try(:destroy_all)
+    Todo.belonging_to(session_user).where(id: params[:ids]).try(:destroy_all)
     load_and_render_index
   end
 
