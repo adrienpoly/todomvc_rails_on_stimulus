@@ -9,8 +9,10 @@
   <% @todos.select { |t| t.completed }.map do |todo| %>
     <%= hidden_field_tag "ids[]", todo.id, id: nil %>
   <% end %>
+
   <%= hidden_field_tag "template_ids[]", nil, id: nil %>
 
-  <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "todo.clear-completed"} %>
   <%= completed_filter_field %>
+
+  <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "todo.clear-completed"} %>
 <% end %>
