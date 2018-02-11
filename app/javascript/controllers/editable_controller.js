@@ -2,38 +2,48 @@ import { ApplicationController } from "stimulus-support";
 import Rails from "rails-ujs";
 
 export default class extends ApplicationController {
+  static targets = ["inputForm", "input", "title"];
+
   submitOnBlur(event) {
+    if (this.isCanceled) return;
+
+    //setTimeout to prevent bug in Chrome
     setTimeout(() => {
-      if (document.body.contains(event.target)) {
-        const form = event.target.closest("form");
-        Rails.fire(form, "submit");
-      }
+      const form = event.target.closest("form");
+      Rails.fire(form, "submit");
     });
-    event.target.closest("li").classList.remove("editing");
-    this.targets.find("input-form").style.display = "none";
+
+    this.element.closest("li").classList.remove("editing");
+    this.titleTarget.innerHTML = this.inputTarget.value;
+    this.inputFormTarget.style.display = "none";
   }
 
   update(event) {
-    this.handleRemote(event.target, this.replaceTodo);
+    this.handleRemote(this.element, this.replaceTodo);
   }
 
   closeOnEsc(event) {
     if (event.keyCode === 27) {
-      event.target.blur();
-      event.target.closest("li").classList.remove("editing");
-      this.targets.find("input-form").style.display = "none";
+      this.data.set("isCanceled", true);
+      this.inputTarget.value = this.titleTarget.innerHTML;
+      this.element.closest("li").classList.remove("editing");
+      this.inputFormTarget.style.display = "none";
     }
   }
 
   editOnDbClick(event) {
-    event.target.closest("li").classList.add("editing");
-    this.targets.find("input-form").style.display = "block";
-    this.targets.find("input").focus();
+    this.element.closest("li").classList.add("editing");
+    this.inputFormTarget.style.display = "block";
+    this.inputTarget.focus();
   }
 
   replaceTodo(event) {
     const todoOld = event.target.closest("li");
     const todoNew = event.detail[0].querySelector("li");
     todoOld.parentNode.replaceChild(todoNew, todoOld);
+  }
+
+  get isCanceled() {
+    return this.data.set("isCanceled") === "true";
   }
 }
