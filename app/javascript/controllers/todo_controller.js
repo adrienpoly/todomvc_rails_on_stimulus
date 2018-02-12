@@ -167,7 +167,6 @@ export default class extends ApplicationController {
     const todosNew = event.detail[0].querySelector("#todos");
     todosOld.parentNode.replaceChild(todosNew, todosOld);
 
-    this.connect();
     this.setActiveNumber();
   }
 
