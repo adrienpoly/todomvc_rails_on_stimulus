@@ -14,7 +14,8 @@ export default class extends ApplicationController {
     "task",
     "activeNumber",
     "toggleAll",
-    "updateManyTodos"
+    "updateManyTodos",
+    "filtersActions"
   ];
 
   connect() {
@@ -41,7 +42,7 @@ export default class extends ApplicationController {
       const todoTitle = this.targets.find("todo-title");
       todoTitle.value = "";
       todoTitle.focus();
-      document.querySelector("#filters-actions").classList.remove("hidden");
+      this.filtersActionsTarget.classList.remove("hidden");
     });
   }
 
