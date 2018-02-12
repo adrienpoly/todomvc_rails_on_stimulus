@@ -2,7 +2,10 @@
               method: :put,
               remote: true,
               id: "update_many_todos",
-              data: { type: "html" },
+              data: {
+                target: "todo.updateManyTodos",
+                type: "html"
+              },
               authenticity_token: true do %>
 
   <% @todos.map do |todo| %>
@@ -14,6 +17,6 @@
   <%= completed_filter_field %>
 
   <%= check_box :todo, :completed, checked: @todos.any? && @todos.all?(&:completed),
-                id: "toggle-all", data: { action: "todo#toggleAll" } %>
+                id: "toggle-all", data: { target: "todo.toggleAll", action: "todo#toggleAll" } %>
   <label for="toggle-all">Mark all as complete</label>
 <% end %>

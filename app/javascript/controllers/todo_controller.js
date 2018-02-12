@@ -9,7 +9,13 @@ const COMPLETED = "completed";
 const ACTIVE = "active";
 
 export default class extends ApplicationController {
-  static targets = ["filter", "task", "activeNumber", "toggleAll"];
+  static targets = [
+    "filter",
+    "task",
+    "activeNumber",
+    "toggleAll",
+    "updateManyTodos"
+  ];
 
   connect() {
     this.initializeFilter();
@@ -121,22 +127,22 @@ export default class extends ApplicationController {
   }
 
   renderSelectAll() {
-    const form = document.querySelector("#update_many_todos");
-    this.renderHiddenIds(form);
-    const toggleAll = form.querySelector("#toggle-all");
-    toggleAll.checked = this.taskElements.length === this.completedTaskElements.length;
+    this.renderHiddenIds(this.updateManyTodosTarget);
+    this.toggleAllTarget.checked =
+      this.taskElements.length === this.completedTaskElements.length;
   }
 
   renderHiddenIds(form, tasks = this.taskElements) {
     const DOMPurify = createDOMPurify(window);
-    form.classList.toggle(
-      "hidden",
-      tasks.length === 0
+    form.classList.toggle("hidden", tasks.length === 0);
+    const oldHiddenIds = form.querySelectorAll(
+      "input[type='hidden'][name='ids[]']"
     );
-    const oldHiddenIds = form.querySelectorAll("input[type='hidden'][name='ids[]']");
     oldHiddenIds.forEach(hiddenId => hiddenId.remove());
 
-    const hiddenIdTemplate = form.querySelector("input[type='hidden'][name='template_ids[]']");
+    const hiddenIdTemplate = form.querySelector(
+      "input[type='hidden'][name='template_ids[]']"
+    );
     tasks.forEach(element => {
       const newHiddenId = hiddenIdTemplate.cloneNode();
       newHiddenId.setAttribute("name", "ids[]");
