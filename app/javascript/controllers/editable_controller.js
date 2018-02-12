@@ -1,11 +1,14 @@
 import { ApplicationController } from "stimulus-support";
 import Rails from "rails-ujs";
+import createDOMPurify from "dompurify";
 
 export default class extends ApplicationController {
   static targets = ["inputForm", "input", "title"];
 
   submitOnBlur(event) {
-    if (this.isCanceled) return;
+    if (this.isCanceled) {
+      return;
+    }
 
     //setTimeout to prevent bug in Chrome
     setTimeout(() => {
@@ -14,7 +17,8 @@ export default class extends ApplicationController {
     });
 
     this.element.closest("li").classList.remove("editing");
-    this.titleTarget.innerHTML = this.inputTarget.value;
+    const DOMPurify = createDOMPurify(window);
+    this.titleTarget.innerHTML = DOMPurify.sanitize(this.inputTarget.value);
     this.inputFormTarget.style.display = "none";
   }
 
@@ -44,6 +48,6 @@ export default class extends ApplicationController {
   }
 
   get isCanceled() {
-    return this.data.set("isCanceled") === "true";
+    return this.data.get("isCanceled") === "true";
   }
 }
