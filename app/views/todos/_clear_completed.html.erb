@@ -2,7 +2,10 @@
               remote: true,
               authenticity_token: true,
               method: :delete,
-              data: { type: "html" },
+              data: {
+                target:"todo.destroyManyTodos",
+                type: "html"
+              },
               id: "destroy_many_todos",
               class: ("hidden" unless @todos.select { |t| t.completed }.size > 0) do %>
 

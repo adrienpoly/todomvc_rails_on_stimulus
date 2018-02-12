@@ -15,7 +15,9 @@ export default class extends ApplicationController {
     "activeNumber",
     "toggleAll",
     "updateManyTodos",
-    "filtersActions"
+    "filtersActions",
+    "destroyManyTodos",
+    "todos"
   ];
 
   connect() {
@@ -123,7 +125,7 @@ export default class extends ApplicationController {
   }
 
   renderClearCompleted() {
-    const form = document.querySelector("#destroy_many_todos");
+    const form = this.destroyManyTodosTarget;
     this.renderHiddenIds(form, this.completedTaskElements);
   }
 
@@ -161,7 +163,7 @@ export default class extends ApplicationController {
   }
 
   replaceTodos(event) {
-    const todosOld = document.querySelector("#todos");
+    const todosOld = this.todosTarget;
     const todosNew = event.detail[0].querySelector("#todos");
     todosOld.parentNode.replaceChild(todosNew, todosOld);
 

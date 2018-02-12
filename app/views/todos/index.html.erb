@@ -1,7 +1,7 @@
 <div id="todoapp" data-controller="todo" data-todo-toggleAll="<%= @todos.any? && @todos.all?(&:completed) %>">
   <%= cache @todos do %>
     <%= render 'input' %>
-    <div id="todos">
+    <div id="todos" data-target="todo.todos">
       <%= render 'select_all' %>
       <ul id="list-todos">
         <%= render @todos, cached: true %>
