@@ -6,7 +6,7 @@
                     authenticity_token: true,
                     data: { type: "html" } do |f| %>
 
-        <%= f.check_box :completed, data: { action: "todo#toggle" }, class: "toggle" %>
+        <%= f.check_box :completed, data: { action: "ajax:complete->todo#toggle" }, class: "toggle" %>
         <%= completed_filter_field %>
       <% end %>
 
@@ -16,7 +16,7 @@
                       remote: true,
                       data: {
                         type: "html",
-                        action: "ajax:complete->editable#update",
+                        action: "ajax:success->editable#update",
                         target: "editable.inputForm"
                       },
                       html: {
@@ -40,7 +40,7 @@
                     html: { class: "destroy_todo" },
                     data: {
                       type: "html",
-                      action: "todo#destroy",
+                      action: "ajax:complete->todo#destroy",
                       target: "todo.destroy-form"
                     } do |f| %>
 
