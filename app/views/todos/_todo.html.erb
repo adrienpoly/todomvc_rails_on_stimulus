@@ -10,13 +10,13 @@
         <%= completed_filter_field %>
       <% end %>
 
-      <div data-controller="editable"  >
-        <label class="toggle-me" data-target="editable.title" data-action="dblclick->editable#editOnDbClick"><%= todo.title %></label>
+      <div data-controller="editable" >
+        <label class="toggle-me" data-target="editable.title" data-action=" dblclick->editable#editOnDbClick"><%= todo.title %></label>
         <%= form_with model: todo,
                       remote: true,
                       data: {
                         type: "html",
-                        action: "editable#update",
+                        action: "ajax:success->editable#update",
                         target: "editable.inputForm"
                       },
                       html: {

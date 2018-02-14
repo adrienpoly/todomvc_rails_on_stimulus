@@ -23,7 +23,9 @@ export default class extends ApplicationController {
   }
 
   update(event) {
-    this.handleRemote(this.element, this.replaceTodo);
+    const todoOld = event.target.closest("li");
+    const todoNew = event.detail[0].querySelector("li");
+    todoOld.parentNode.replaceChild(todoNew, todoOld);
   }
 
   closeOnEsc(event) {
@@ -39,12 +41,6 @@ export default class extends ApplicationController {
     this.element.closest("li").classList.add("editing");
     this.inputFormTarget.style.display = "block";
     this.inputTarget.focus();
-  }
-
-  replaceTodo(event) {
-    const todoOld = event.target.closest("li");
-    const todoNew = event.detail[0].querySelector("li");
-    todoOld.parentNode.replaceChild(todoNew, todoOld);
   }
 
   get isCanceled() {
