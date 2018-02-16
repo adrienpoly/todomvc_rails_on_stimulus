@@ -8,6 +8,6 @@ module ApplicationHelper
              elsif request.fullpath.match?('completed=true')
                true
              end
-    hidden_field_tag 'completed_filter', params
+    hidden_field_tag 'completed_filter', params, id: nil
   end
 end

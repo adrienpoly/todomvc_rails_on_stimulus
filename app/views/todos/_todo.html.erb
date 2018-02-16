@@ -1,20 +1,24 @@
 <% cache todo do %>
-  <li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-target="todo.task" >
+  <li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %>" data-target="todo.task" data-id="<%= todo.id %>">
     <div class="view">
       <%= form_with model: todo,
                     remote: true,
                     authenticity_token: true,
-                    data: { action: "click->todo#toggle" } do |f| %>
+                    data: { type: "html" } do |f| %>
 
-        <%= f.check_box :completed, class: "toggle" %>
+        <%= f.check_box :completed, data: { action: "todo#toggle" }, class: "toggle" %>
         <%= completed_filter_field %>
       <% end %>
 
-      <div data-controller="editable" data-target="editable.title" >
-        <label class="toggle-me" data-action="dblclick->editable#editOnDbClick"><%= todo.title %></label>
+      <div data-controller="editable" >
+        <label class="toggle-me" data-target="editable.title" data-action=" dblclick->editable#editOnDbClick"><%= todo.title %></label>
         <%= form_with model: todo,
                       remote: true,
-                      data: { target: "editable.input-form" },
+                      data: {
+                        type: "html",
+                        action: "ajax:success->editable#update",
+                        target: "editable.inputForm"
+                      },
                       html: {
                         class: "toggle-me todo-title",
                         style: "display: none" } do |f|%>
@@ -34,7 +38,11 @@
                     authenticity_token: true,
                     method: "delete",
                     html: { class: "destroy_todo" },
-                    data: {action: "click->todo#destroy"} do |f| %>
+                    data: {
+                      type: "html",
+                      action: "ajax:success->todo#destroy",
+                      target: "todo.destroyForm"
+                    } do |f| %>
 
         <%= button_tag "", class: "destroy" %>
         <%= completed_filter_field %>

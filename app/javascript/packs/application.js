@@ -4,8 +4,9 @@ import Turbolinks from "turbolinks";
 import Rails from "rails-ujs";
 import "../stylesheets/todomvc.scss";
 import "../images/index";
+
 const application = Application.start();
-const context = require.context("../controllers", true, /\.js$/);
+const context = require.context("controllers", true, /\.js$/);
 application.load(definitionsFromContext(context));
 
 Rails.start();
