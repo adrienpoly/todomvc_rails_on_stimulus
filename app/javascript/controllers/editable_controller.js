@@ -1,4 +1,5 @@
 import { ApplicationController } from "stimulus-support";
+import Turbolinks from "turbolinks";
 import Rails from "rails-ujs";
 import createDOMPurify from "dompurify";
 
@@ -10,7 +11,7 @@ export default class extends ApplicationController {
       return;
     }
 
-    //setTimeout to prevent bug in Chrome
+    // setTimeout to prevent bug in Chrome
     setTimeout(() => {
       const form = event.target.closest("form");
       Rails.fire(form, "submit");
@@ -26,6 +27,7 @@ export default class extends ApplicationController {
     const todoOld = event.target.closest("li");
     const todoNew = event.detail[0].querySelector("li");
     todoOld.parentNode.replaceChild(todoNew, todoOld);
+    Turbolinks.clearCache();
   }
 
   closeOnEsc(event) {

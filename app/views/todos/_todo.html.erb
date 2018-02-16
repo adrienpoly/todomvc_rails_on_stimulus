@@ -40,8 +40,8 @@
                     html: { class: "destroy_todo" },
                     data: {
                       type: "html",
-                      action: "ajax:complete->todo#destroy",
-                      target: "todo.destroy-form"
+                      action: "ajax:success->todo#destroy",
+                      target: "todo.destroyForm"
                     } do |f| %>
 
         <%= button_tag "", class: "destroy" %>

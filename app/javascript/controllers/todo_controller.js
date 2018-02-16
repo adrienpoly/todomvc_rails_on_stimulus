@@ -11,6 +11,7 @@ const ACTIVE = "active";
 export default class extends ApplicationController {
   static targets = [
     "filter",
+    "todoTitle",
     "task",
     "activeNumber",
     "toggleAll",
@@ -38,14 +39,12 @@ export default class extends ApplicationController {
   }
 
   create(event) {
-    const form = event.target.closest("form");
-    this.handleRemote(form, successEvent => {
-      this.replaceTodos(successEvent);
-      const todoTitle = this.targets.find("todo-title");
-      todoTitle.value = "";
-      todoTitle.focus();
-      this.filtersActionsTarget.classList.remove("hidden");
-    });
+    this.replaceTodos(event);
+    const todoTitle = this.todoTitleTarget;
+    todoTitle.value = "";
+    todoTitle.focus();
+    this.filtersActionsTarget.classList.remove("hidden");
+    Turbolinks.clearCache();
   }
 
   toggle(event) {
@@ -60,25 +59,23 @@ export default class extends ApplicationController {
   }
 
   destroy(event) {
-    const form = event.target;
     const todo = event.target.closest("li");
-    this.handleRemote(form, successEvent => {
-      todo.remove();
-      this.renderSelectAll();
-      this.renderClearCompleted();
-      this.setActiveNumber();
-    });
+    todo.remove();
+    this.renderSelectAll();
+    this.renderClearCompleted();
+    this.setActiveNumber();
+    Turbolinks.clearCache();
   }
 
-  toggleAll(event) {
-    const form = event.target.closest("form");
+  toggleAll() {
+    const form = this.updateManyTodosTarget;
     this.handleRemote(form, this.replaceTodos);
     Rails.fire(form, "submit");
   }
 
   destroyAll() {
     this.completedTaskElements.forEach(task => {
-      task.classList.add("hidden");
+      task.remove();
     });
     Turbolinks.clearCache();
   }
@@ -166,7 +163,7 @@ export default class extends ApplicationController {
     const todosOld = this.todosTarget;
     const todosNew = event.detail[0].querySelector("#todos");
     todosOld.parentNode.replaceChild(todosNew, todosOld);
-
+    this.renderTodos();
     this.setActiveNumber();
   }
 

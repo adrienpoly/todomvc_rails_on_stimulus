@@ -2,14 +2,14 @@
   <h1>todos</h1>
   <%= form_with model: Todo.new, remote: true, data: {
       type: "html",
-      action: "todo#create",
-      target: "todo.input-form"
+      action: "ajax:success->todo#create",
+      target: "todo.inputForm"
     }, authenticity_token: true do |f| %>
     <%= f.text_field :title,
           id: "new-todo",
           placeholder: "What needs to be done?",
           autofocus: true,
-          data: { target: "todo.todo-title" },
+          data: { target: "todo.todoTitle" },
           autocomplete: "off" %>
     <%= completed_filter_field %>
   <% end %>
