@@ -52,7 +52,7 @@ export default class extends ApplicationController {
     const form = event.target.closest("form");
     this.handleRemote(form, successEvent => {
       const editableController = this.getControllerByIdentifier("editable");
-      editableController.replaceTodo(successEvent);
+      editableController.update(successEvent);
       this.renderTodos();
       this.setActiveNumber();
     });

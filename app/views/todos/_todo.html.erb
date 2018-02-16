@@ -6,7 +6,7 @@
                     authenticity_token: true,
                     data: { type: "html" } do |f| %>
 
-        <%= f.check_box :completed, data: { action: "ajax:complete->todo#toggle" }, class: "toggle" %>
+        <%= f.check_box :completed, data: { action: "todo#toggle" }, class: "toggle" %>
         <%= completed_filter_field %>
       <% end %>
 
