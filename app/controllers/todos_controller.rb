@@ -13,22 +13,27 @@ class TodosController < ApplicationController
   end
 
   def update
-    Todo.find(params[:id]).update(todo_params.to_h)
-    load_and_render_index
+    if Todo.find(params[:id]).update(todo_params.to_h)
+      head :ok
+    else
+      render json: {status: "error", code: :bad_request, message: "Cannot be blank"}, status: :bad_request
+    end
   end
 
   def update_many
-    Todo.where(id: params[:ids]).update_all(todo_params.to_h)
+    Todo.belonging_to(session_user)
+        .where(id: params[:ids])
+        .update_all(todo_params.to_h.merge(updated_at: Time.zone.now))
     load_and_render_index
   end
 
   def destroy
-    Todo.find_by(id: params[:id]).try(:destroy)
+    Todo.belonging_to(session_user).find_by(id: params[:id]).try(:destroy)
     load_and_render_index
   end
 
   def destroy_many
-    Todo.where(id: params[:ids]).try(:destroy_all)
+    Todo.belonging_to(session_user).where(id: params[:ids]).try(:destroy_all)
     load_and_render_index
   end
 
@@ -41,7 +46,8 @@ class TodosController < ApplicationController
   def load_and_render_index
     load_todos
     @params = params[:completed_filter].blank? ? '' : { completed: params[:completed_filter] }
-    render :index
+    render :index, layout: false
+    # redirect_to root_path
   end
 
   # def filtering_params
@@ -50,6 +56,7 @@ class TodosController < ApplicationController
 
   def load_todos
     @todos = Todo.belonging_to(session_user).order(created_at: :asc)
+    fresh_when(@todos)
     # filtering_params.each do |key, value|
     # @todos = @todos.public_send(key, value) if value.present?
     # end

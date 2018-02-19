@@ -8,7 +8,7 @@ const COMPLETED = "completed";
 const ACTIVE = "active";
 
 export default class extends Controller {
-  static targets = ["filter", "task", "activeNumber", "toggleAll"]
+  static targets = ["filter", "task", "activeNumber", "toggleAll"];
 
   connect() {
     this.initializeFilter();
@@ -45,11 +45,12 @@ export default class extends Controller {
   toggleAll(event) {
     const form = event.target.closest("form");
     Rails.fire(form, "submit");
-    this.isToggleAll = !this.isToggleAll;
-    this.taskElements.forEach(task => {
-      task.classList.toggle("completed", this.isToggleAll);
-      task.querySelector(".toggle").checked = this.isToggleAll;
+    const toggle = this.isToggleAll;
+    this.taskTargets.forEach(task => {
+      task.classList.toggle("completed", toggle);
+      task.querySelector(".toggle").checked = toggle;
     });
+    this.isToggleAll = !toggle;
     this.setActiveNumber();
   }
 
@@ -111,7 +112,14 @@ export default class extends Controller {
   }
 
   get isToggleAll() {
-    return this.data.get("toggleAll") === "true";
+    if (this.data.has("toggleAll"))
+      return this.data.get("toggleAll") === "true";
+
+    if (this.completedTaskElements.length === this.taskElements.length) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   get filter() {
