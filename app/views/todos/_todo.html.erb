@@ -1,22 +1,10 @@
 <% cache todo do %>
-  <li id="todos:<%= todo.id %>" class="<%= 'completed' if todo.completed %> hidden" data-target="todo.task" >
+  <li data-controller="todoItem" data-todoItem-id="<%= todo.id %>" class="<%= 'completed' if todo.completed %>" data-target="todoList.task" >
     <div class="view">
-      <%= form_with model: todo, authenticity_token: true do |f| %>
-        <%= f.check_box :completed, data: { action: "todo#toggle" }, class: "toggle" %>
-        <%= completed_filter_field %>
-      <% end %>
-      
-      <%= editable_field todo, :title %>
-
-      <%= form_with model: todo,
-                    authenticity_token: true,
-                    method: "delete",
-                    html: { class: "destroy_todo" },
-                    data: {action: "todo#destroy"} do |f| %>
-
-        <%= button_tag "", class: "destroy" %>
-        <%= completed_filter_field %>
-      <% end %>
+      <input class="toggle" type="checkbox" data-action="todoItem#toggle" <%= todo.completed ? "checked" : "" %>>
+      <label data-action="dblclick->todoItem#edit" data-target="todoItem.title"><%= h todo.title %></label>
+      <button class="destroy" data-action="todoItem#destroy"></button>
     </div>
+    <input class="edit" data-target="todoItem.input" data-action="blur->todoItem#submit keydown->todoItem#keydown">
   </li>
 <% end %>

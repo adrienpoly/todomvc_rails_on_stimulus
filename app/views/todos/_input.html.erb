@@ -2,10 +2,12 @@
   <h1>todos</h1>
   <%= form_with model: Todo.new, remote: true, authenticity_token: true do |f| %>
     <%= f.text_field :title,
-          id: "new-todo",
+          class: "new-todo",
           placeholder: "What needs to be done?",
           autofocus: true,
-          data: {target: "todo-title"},
+          data: {
+            target: "todoList.input"
+          },
           autocomplete: "off" %>
     <%= completed_filter_field %>
   <% end %>

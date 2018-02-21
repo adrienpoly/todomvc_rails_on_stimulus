@@ -11,18 +11,14 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body>
-    <div class="link-github" data-turbolinks-permanent>
-      <a href="https://github.com/adrienpoly/todomvc_rails_on_stimulus">
-        <%= image_tag asset_pack_path('images/github.png'), width: 32 %>
-      </a>
-    </div>
+  <body class="learn-bar">
+
     <%= yield %>
 
-    <div id="info" data-turbolinks-permanent>
-      <p>Double-click to edit a todo</p>
-      <p>Created by <a href="https://github.com/adrienpoly">Adrien Poly</a></p>
-      <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+    <div class="info" data-turbolinks-permanent>
+      <h3>Double-click to edit a todo</h3>
+      <h3>Created by <a href="https://github.com/adrienpoly">Adrien Poly</a></h3>
+      <h3>Part of <a href="http://todomvc.com">TodoMVC</a></h3>
     </div>
   </body>
 

@@ -8,33 +8,48 @@ class TodosController < ApplicationController
   end
 
   def create
-    Todo.create(todo_params.merge(session_user_id: session_user))
+    unless Todo.create(todo_params.merge(session_user_id: session_user))
+      flash[:alert] = 'Cannot create a new task'
+    end
     load_and_render_index
   end
 
   def update
+    p todo_params[:title]
     if Todo.find(params[:id]).update(todo_params.to_h)
       head :ok
     else
-      render json: {status: "error", code: :bad_request, message: "Cannot be blank"}, status: :bad_request
+      flash[:alert] = 'Todo title cannot be blank'
+      load_and_render_index
     end
   end
 
   def update_many
-    Todo.belonging_to(session_user)
-        .where(id: params[:ids])
-        .update_all(todo_params.to_h.merge(updated_at: Time.zone.now))
-    load_and_render_index
+    toggle = params[:toggle] == "true"
+    if Todo.belonging_to(session_user).completed(!toggle).each { |todo| todo.update(completed: toggle) }
+        head :ok
+    else
+      flash[:alert] = 'Unable to update tasks'
+      load_and_render_index
+    end
   end
 
   def destroy
-    Todo.belonging_to(session_user).find_by(id: params[:id]).try(:destroy)
-    load_and_render_index
+    if Todo.belonging_to(session_user).find_by(id: params[:id]).try(:destroy)
+      head :ok
+    else
+      flash[:alert] = 'Unable to delete task'
+      load_and_render_index
+    end
   end
 
   def destroy_many
-    Todo.belonging_to(session_user).where(id: params[:ids]).try(:destroy_all)
-    load_and_render_index
+    if Todo.belonging_to(session_user).completed(true).try(:destroy_all)
+      head :ok
+    else
+      flash[:alert] = 'Unable to delete tasks'
+      load_and_render_index
+    end
   end
 
   private
@@ -46,8 +61,7 @@ class TodosController < ApplicationController
   def load_and_render_index
     load_todos
     @params = params[:completed_filter].blank? ? '' : { completed: params[:completed_filter] }
-    render :index, layout: false
-    # redirect_to root_path
+    redirect_to todos_path
   end
 
   # def filtering_params

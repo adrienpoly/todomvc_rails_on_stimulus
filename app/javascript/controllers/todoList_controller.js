@@ -1,19 +1,55 @@
-import { Controller } from "stimulus";
+import { ApplicationController } from "../support/application-controller";
 import pluralize from "pluralize";
-import Rails from "rails-ujs";
-import createDOMPurify from "dompurify";
+import safetext from "../support/safetext";
 
 const ALL = "all";
 const COMPLETED = "completed";
 const ACTIVE = "active";
 
-export default class extends Controller {
-  static targets = ["filter", "task", "activeNumber", "toggleAll"];
+export default class extends ApplicationController {
+  static targets = [
+    "filter",
+    "task",
+    "activeNumber",
+    "toggleAll",
+    "clearCompleted",
+    "footer",
+    "input",
+    "alert"
+  ];
 
   connect() {
     this.initializeFilter();
+    this.render();
+    this.hideAlert();
+  }
+
+  toggleAll(event) {
+    const toggle = this.isToggleAll;
+    this.railsUpdate("update_many", "toggle", toggle);
+    this.taskTargets.forEach(task => {
+      task.classList.toggle("completed", toggle);
+      task.querySelector(".toggle").checked = toggle;
+    });
+    this.isToggleAll = !toggle;
+    this.render();
+  }
+
+  destroyAll() {
+    this.completedTaskElements.forEach(task => {
+      task.remove();
+    });
+    this.railsDelete("destroy_many");
+    this.render();
+  }
+
+  render() {
+    this.setActiveNumber();
+    this.renderClearCompleted();
+    this.renderFooter();
     this.renderTodos();
     this.renderFilters();
+    this.inputTarget.focus();
   }
 
   initializeFilter() {
@@ -27,39 +63,6 @@ export default class extends Controller {
         : completedParam === "true" ? COMPLETED : ACTIVE;
   }
 
-  toggle(event) {
-    const todo = event.target.closest("li");
-    const form = event.target.closest("form");
-    Rails.fire(form, "submit");
-    todo.classList.toggle("completed");
-    this.setActiveNumber();
-    this.renderTodos();
-  }
-
-  destroy(event) {
-    const todo = event.target.closest("li");
-    todo.classList.add("hidden", "completed");
-    this.setActiveNumber();
-  }
-
-  toggleAll(event) {
-    const form = event.target.closest("form");
-    Rails.fire(form, "submit");
-    const toggle = this.isToggleAll;
-    this.taskTargets.forEach(task => {
-      task.classList.toggle("completed", toggle);
-      task.querySelector(".toggle").checked = toggle;
-    });
-    this.isToggleAll = !toggle;
-    this.setActiveNumber();
-  }
-
-  destroyAll() {
-    this.completedTaskElements.forEach(task => {
-      task.classList.add("hidden");
-    });
-  }
-
   selectFilter(event) {
     this.filter = event.target.name;
     this.renderTodos();
@@ -67,12 +70,19 @@ export default class extends Controller {
   }
 
   setActiveNumber() {
-    const DOMPurify = createDOMPurify(window);
     const activeNumberStr = `${this.active} ${pluralize(
       "item",
       this.active
     )} left`;
-    this.displayActive.innerHTML = DOMPurify.sanitize(activeNumberStr);
+    this.displayActive.innerHTML = safetext(activeNumberStr);
+  }
+
+  hideAlert() {
+    if (this.targets.find("alert")) {
+      window.setTimeout(() => {
+        this.alertTarget.remove();
+      }, 6000);
+    }
   }
 
   renderTodos() {
@@ -93,10 +103,24 @@ export default class extends Controller {
     });
   }
 
+  renderFooter() {
+    this.footerTarget.classList.toggle(
+      "hidden",
+      this.taskElements.length === 0
+    );
+  }
+
   renderFilters() {
     this.filterElements.forEach(filter => {
       filter.classList.toggle("selected", filter.name === this.filter);
     });
+  }
+
+  renderClearCompleted() {
+    this.clearCompletedTarget.classList.toggle(
+      "hidden",
+      this.completedTaskElements.length === 0
+    );
   }
 
   set active(value) {
@@ -112,10 +136,9 @@ export default class extends Controller {
   }
 
   get isToggleAll() {
-    if (this.data.has("toggleAll"))
+    if (this.data.has("toggleAll")) {
       return this.data.get("toggleAll") === "true";
-
-    if (this.completedTaskElements.length === this.taskElements.length) {
+    } else if (this.completedTaskElements.length === this.taskElements.length) {
       return false;
     } else {
       return true;

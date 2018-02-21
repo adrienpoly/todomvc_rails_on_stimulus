@@ -1,16 +1,14 @@
-import { Controller } from "stimulus";
-import Rails from "rails-ujs";
+import { ApplicationController } from "../support/application-controller";
 import safetext from "../support/safetext";
 
 const ENTER_KEY = 13;
 const ESCAPE_KEY = 27;
 
-export default class extends Controller {
+export default class extends ApplicationController {
   static targets = ["inputForm", "input", "title"];
 
   submit(event) {
-    this.element.closest("li").classList.remove("editing");
-    this.inputFormTarget.style.display = "none";
+    this.element.classList.remove("editing");
 
     if (this.isCanceled) {
       this.input = this.title;
@@ -30,26 +28,35 @@ export default class extends Controller {
   }
 
   edit() {
-    this.element.closest("li").classList.add("editing");
-    this.inputFormTarget.style.display = "block";
+    this.input = this.title;
+    this.element.classList.add("editing");
     this.inputTarget.focus();
   }
 
-  handleSubmit() {
-    this.element.closest("li").classList.remove("editing");
-    this.inputFormTarget.style.display = "none";
+  toggle(event) {
+    this.element.classList.toggle("completed");
+    this.railsUpdate(`${this.id}`, "todo[completed]", event.target.checked);
+    this.updateList();
+  }
 
-    const data = new FormData();
-    data.append("todo[title]", this.input);
-
-    Rails.ajax({
-      url: `${this.id}`,
-      type: "PATCH",
-      data,
-      error: error => {
-        this.edit();
-      }
+  destroy(event) {
+    this.element.remove();
+    this.railsDelete(`${this.id}`).catch(err => {
+      this.element.classList.remove("hidden");
     });
+    this.updateList();
+  }
+
+  handleSubmit() {
+    this.element.classList.remove("editing");
+    this.railsUpdate(`${this.id}`, "todo[title]", this.input).catch(error => {
+      this.edit();
+    });
+  }
+
+  updateList() {
+    const todoController = this.getControllerByIdentifier("todoList");
+    todoController.render();
   }
 
   // GETTERS AND SETTERS

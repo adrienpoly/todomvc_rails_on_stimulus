@@ -1,12 +1,12 @@
-<div id="filters-actions" class="<%= "hidden" unless @todos.any? %>">
-  <span id="todo-count" data-target="todo.activeNumber">
+<div class="footer <%= "hidden" unless @todos.any? %>" data-target="todoList.footer">
+  <span class="todo-count" data-target="todoList.activeNumber">
     <%= pluralize @todos.reject(&:completed).size, "item" %> left
   </span>
-  <ul id="filters">
+  <ul class="filters">
     <li>
       <%= link_to "All",
             root_path,
-            data: { action: "click->todo#selectFilter", target: "todo.filter" },
+            data: { action: "click->todoList#selectFilter", target: "todoList.filter" },
             name: "all",
             class: "selected" %>
     </li>
@@ -14,27 +14,14 @@
       <%= link_to "Active",
             root_path({completed: false}),
             name: "active",
-            data: { action: "click->todo#selectFilter", target: "todo.filter" } %>
+            data: { action: "click->todoList#selectFilter", target: "todoList.filter" } %>
     </li>
     <li>
       <%= link_to "Completed",
             root_path({completed: true}),
             name: "completed",
-            data: { action: "click->todo#selectFilter", target: "todo.filter" } %>
+            data: { action: "click->todoList#selectFilter", target: "todoList.filter" } %>
     </li>
   </ul>
-  <% if @todos.select { |t| t.completed }.size > 0 %>
-    <%= form_with url: destroy_many_todos_path,
-                  remote: true,
-                  authenticity_token: true,
-                  method: :delete do %>
-
-      <% @todos.select { |t| t.completed }.map do |todo| %>
-        <%= hidden_field_tag "ids[]", todo.id %>
-      <% end %>
-
-      <%= button_tag "Clear completed", id: "clear-completed", data: {action: "todo#destroyAll", target: "clear-completed"} %>
-      <%= completed_filter_field %>
-    <% end %>
-  <% end %>
+    <button class="clear-completed <%= @todos.select(&:completed).count > 0 ? "" : "hidden" %>" data-action="todoList#destroyAll" data-target="todoList.clearCompleted">Clear completed</button>
 </div>

@@ -1,15 +1,9 @@
-<%= form_with url: update_many_todos_path,
-              method: :put,
-              remote: true,
-              id: "update_many_todos",
-              data: {action: "change->todo#toggleAll"},
-              authenticity_token: true do %>
 
-  <% @todos.map do |todo| %>
-    <%= hidden_field_tag "ids[]", todo.id %>
-    <%= completed_filter_field %>
-  <% end %>
 
-  <%= check_box :todo, :completed, checked: @todos.any? && @todos.all?(&:completed), id: "toggle-all" %>
-  <label for="toggle-all">Mark all as complete</label>
+<input id="toggle-all" <%= (@todos.any? && @todos.all?(&:completed)) ? "checked" : "" %> class="toggle-all" type="checkbox" data-action="todoList#toggleAll">
+<label for="toggle-all">Mark all as complete</label>
+
+<% @todos.map do |todo| %>
+  <%= hidden_field_tag "ids[]", todo.id %>
+  <%#= completed_filter_field %>
 <% end %>
