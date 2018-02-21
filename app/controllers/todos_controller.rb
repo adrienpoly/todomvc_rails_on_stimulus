@@ -8,9 +8,7 @@ class TodosController < ApplicationController
   end
 
   def create
-    unless Todo.create(todo_params.merge(session_user_id: session_user))
-      flash[:alert] = 'Cannot create a new task'
-    end
+    flash[:alert] = 'Cannot create a new task' unless Todo.create(todo_params.merge(session_user_id: session_user))
     load_and_render_index
   end
 
@@ -25,9 +23,9 @@ class TodosController < ApplicationController
   end
 
   def update_many
-    toggle = params[:toggle] == "true"
+    toggle = params[:toggle] == 'true'
     if Todo.belonging_to(session_user).completed(!toggle).each { |todo| todo.update(completed: toggle) }
-        head :ok
+      head :ok
     else
       flash[:alert] = 'Unable to update tasks'
       load_and_render_index
