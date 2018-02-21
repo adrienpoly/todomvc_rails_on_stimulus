@@ -78,7 +78,7 @@ export default class extends ApplicationController {
   }
 
   hideAlert() {
-    if (this.targets.find("alert")) {
+    if (this.hasAlertTarget) {
       window.setTimeout(() => {
         this.alertTarget.remove();
       }, 6000);

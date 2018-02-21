@@ -10,8 +10,8 @@ end
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.4'
-gem 'turbolinks'
 gem 'redis-rails'
+gem 'turbolinks'
 gem 'webpacker'
 
 group :development, :test do
