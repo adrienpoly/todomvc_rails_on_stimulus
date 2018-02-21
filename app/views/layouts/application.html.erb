@@ -2,12 +2,18 @@
 <html>
   <head>
     <title>A modest TodoMVC rails app boosted with Stimulus</title>
+    <!--  inline css to get 100 at google page speed-->
+    <% if Rails.env.production? %>
+      <style>
+        <%= raw File.read("public" + asset_pack_path("application.css")) %>
+      </style>
+    <% else %>
+      <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+   <% end %>
 
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', async: Rails.env.production? %>
     <meta name=viewport content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="turbolinks-cache-control" content="no-preview">
     <%= csrf_meta_tags %>
   </head>
 
