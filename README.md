@@ -7,10 +7,7 @@ This project was inspired by [this project](https://github.com/nateberkopec/todo
 
 The goal of this project was primarily to get more familiar and practice with the new [Stimulus](https://github.com/stimulusjs/stimulus) framework.
 The approach taken in this project is to make most of the actions on the todolist client side with Stimulus controller **to get this crisp and fast feeling of client side rendering**.
-This Todolist preserves the data in a database within the backend. Each action is therefore linked to a call to the backend to update the content in the database. Those calls are form post submission to keep strong parameters (an alternative could be Ajax post).
-As a return from the backend, the page is silently refreshed by Turbolinks. Unless there is a problem persisting the data in the database the refresh is not visible as it is the same as what has already been done by Stimulus controllers.
-
-This is probably not an approach that I would take in production but for this purpose of demo, it does make the job!
+This Todolist preserves the data in a database within the backend. Each action is therefore linked to a call to the backend to update the content in the database. Those calls are ajax calls using Rails UJS `Rails.ajax`.
 
 ## Demo
 
@@ -24,10 +21,9 @@ As a comparison you can also test the Turbolink 3 only: https://todomvc-turbolin
 
 * [x] Fix Turbolinks blinks and path change
 * [x] We are talking about speed here, score a 100 at Google page speed 💯
-* [ ] fix Turbolinks scrolling back to top instead of keeping the current scroll position
-* [ ] Add a new todo client side
-* [ ] Split the Todo controller in smaller controllers that communicate between each others
 * [ ] Add tests
+* [ ] Add a new todo client side
+* [ ] Split the Todo controller in smaller controllers that communicate between each others (wait for 1.1)
 
 ## Disclaimer
 
@@ -38,4 +34,6 @@ This is not intended to be a perfect example of how to use Stimulus, Rails and T
 Lots of inspiration from this great project that got me started
 [A Turbolinks 3 TodoMVC](https://github.com/nateberkopec/todomvc-turbolinks)
 
-Many thanks for all Q&A in the Stimulus issues
+Many thanks for all Q&A in the Stimulus [issues](https://github.com/stimulusjs/stimulus/issues?q=is%3Aissue+is%3Aclosed)
+
+[@nowhereman](https://github.com/nowhereman) : for sending a nice [PR](https://github.com/adrienpoly/todomvc_rails_on_stimulus/pull/4) . While it hasn't been merged it helped me a lot understanding how Turbolinks, Rails-ujs plays all together
