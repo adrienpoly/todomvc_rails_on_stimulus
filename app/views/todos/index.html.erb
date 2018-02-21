@@ -1,12 +1,16 @@
-<div id="todoapp" data-controller="todo" data-todo-toggleAll="<%= @todos.any? && @todos.all?(&:completed) %>">
-  <%= cache @todos do %>
-    <%= render 'input' %>
-    <div id="todos">
-      <%= render 'select_all' %>
-      <ul id="list-todos">
-        <%= render @todos, cached: true %>
-      </ul>
+  <%= render 'aside' %>
+  <div data-controller="todoList" data-todoList-toggleAll="<%= @todos.any? && @todos.all?(&:completed) %>">
+    <div class="todoapp">
+      <%= cache @todos do %>
+      <%= render 'input' %>
+      <div class="main">
+        <%= render 'select_all' %>
+        <ul class="todo-list">
+          <%= render @todos, cached: true %>
+        </ul>
+      </div>
+      <%= render 'filters' %>
+      <% end %>
     </div>
-    <%= render 'filters' %>
-  <% end %>
-</div>
+    <%= render 'alert' %>
+  </div>

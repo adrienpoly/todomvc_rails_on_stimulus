@@ -8,28 +8,46 @@ class TodosController < ApplicationController
   end
 
   def create
-    Todo.create(todo_params.merge(session_user_id: session_user))
+    flash[:alert] = 'Cannot create a new task' unless Todo.create(todo_params.merge(session_user_id: session_user))
     load_and_render_index
   end
 
   def update
-    Todo.find(params[:id]).update(todo_params.to_h)
-    load_and_render_index
+    p todo_params[:title]
+    if Todo.find(params[:id]).update(todo_params.to_h)
+      head :ok
+    else
+      flash[:alert] = 'Todo title cannot be blank'
+      load_and_render_index
+    end
   end
 
   def update_many
-    Todo.where(id: params[:ids]).update_all(todo_params.to_h)
-    load_and_render_index
+    toggle = params[:toggle] == 'true'
+    if Todo.belonging_to(session_user).completed(!toggle).each { |todo| todo.update(completed: toggle) }
+      head :ok
+    else
+      flash[:alert] = 'Unable to update tasks'
+      load_and_render_index
+    end
   end
 
   def destroy
-    Todo.find_by(id: params[:id]).try(:destroy)
-    load_and_render_index
+    if Todo.belonging_to(session_user).find_by(id: params[:id]).try(:destroy)
+      head :ok
+    else
+      flash[:alert] = 'Unable to delete task'
+      load_and_render_index
+    end
   end
 
   def destroy_many
-    Todo.where(id: params[:ids]).try(:destroy_all)
-    load_and_render_index
+    if Todo.belonging_to(session_user).completed(true).try(:destroy_all)
+      head :ok
+    else
+      flash[:alert] = 'Unable to delete tasks'
+      load_and_render_index
+    end
   end
 
   private
@@ -41,7 +59,7 @@ class TodosController < ApplicationController
   def load_and_render_index
     load_todos
     @params = params[:completed_filter].blank? ? '' : { completed: params[:completed_filter] }
-    render :index
+    redirect_to todos_path
   end
 
   # def filtering_params
@@ -50,6 +68,7 @@ class TodosController < ApplicationController
 
   def load_todos
     @todos = Todo.belonging_to(session_user).order(created_at: :asc)
+    fresh_when(@todos)
     # filtering_params.each do |key, value|
     # @todos = @todos.public_send(key, value) if value.present?
     # end

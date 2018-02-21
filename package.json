@@ -4,10 +4,11 @@
   "dependencies": {
     "@rails/webpacker": "^3.2.0",
     "coffeescript": "1.12.7",
-    "dompurify": "^1.0.3",
     "pluralize": "^7.0.0",
     "rails-ujs": "^5.1.4",
     "stimulus": "^1.0.0",
+    "todomvc-app-css": "^2.1.0",
+    "todomvc-common": "^1.0.4",
     "turbolinks": "^5.0.3"
   },
   "devDependencies": {
