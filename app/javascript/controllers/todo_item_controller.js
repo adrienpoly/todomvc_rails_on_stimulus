@@ -55,7 +55,7 @@ export default class extends ApplicationController {
   }
 
   updateList() {
-    const todoController = this.getControllerByIdentifier("todoList");
+    const todoController = this.getControllerByIdentifier("todo-list");
     todoController.render();
   }
 

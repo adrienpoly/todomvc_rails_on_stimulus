@@ -1,9 +1,8 @@
 
 
-<input id="toggle-all" <%= (@todos.any? && @todos.all?(&:completed)) ? "checked" : "" %> class="toggle-all" type="checkbox" data-action="todoList#toggleAll">
+<input id="toggle-all" <%= (@todos.any? && @todos.all?(&:completed)) ? "checked" : "" %> class="toggle-all" type="checkbox" data-action="todo-list#toggleAll">
 <label for="toggle-all">Mark all as complete</label>
 
 <% @todos.map do |todo| %>
   <%= hidden_field_tag "ids[]", todo.id %>
-  <%#= completed_filter_field %>
 <% end %>

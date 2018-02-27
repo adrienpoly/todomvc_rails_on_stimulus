@@ -1,10 +1,10 @@
 <% cache todo do %>
-  <li data-controller="todoItem" data-todoItem-id="<%= todo.id %>" class="<%= 'completed' if todo.completed %>" data-target="todoList.task" >
+  <li data-controller="todo-item" data-todo-item-id="<%= todo.id %>" class="<%= 'completed' if todo.completed %>" data-target="todo-list.task" >
     <div class="view">
-      <input class="toggle" type="checkbox" data-action="todoItem#toggle" <%= todo.completed ? "checked" : "" %>>
-      <label data-action="dblclick->todoItem#edit" data-target="todoItem.title"><%= h todo.title %></label>
-      <button class="destroy" data-action="todoItem#destroy"></button>
+      <input class="toggle" type="checkbox" data-action="todo-item#toggle" <%= todo.completed ? "checked" : "" %>>
+      <label data-action="dblclick->todo-item#edit" data-target="todo-item.title"><%= h todo.title %></label>
+      <button class="destroy" data-action="todo-item#destroy"></button>
     </div>
-    <input class="edit" data-target="todoItem.input" data-action="blur->todoItem#submit keydown->todoItem#keydown">
+    <input class="edit" data-target="todo-item.input" data-action="blur->todo-item#submit keydown->todo-item#keydown">
   </li>
 <% end %>
