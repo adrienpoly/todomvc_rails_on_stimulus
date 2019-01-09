@@ -7,18 +7,16 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'pg', '~> 0.18'
-gem 'puma', '~> 3.7'
-gem 'rails', '~> 5.1.4'
+gem 'pg'
+gem 'puma'
+gem 'rails', '~> 5.2.2'
 gem 'redis-rails'
 gem 'turbolinks'
 gem 'webpacker'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '~> 2.13'
+  gem 'capybara'
   gem 'selenium-webdriver'
 end
 
@@ -29,4 +27,4 @@ group :development do
   gem 'web-console', '>= 3.3.0'
 end
 
-ruby '2.4.3'
+ruby '2.6.0'
