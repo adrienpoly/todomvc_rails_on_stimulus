@@ -13,6 +13,7 @@ gem 'rails', '~> 5.2.2'
 gem 'redis-rails'
 gem 'turbolinks'
 gem 'webpacker'
+gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
