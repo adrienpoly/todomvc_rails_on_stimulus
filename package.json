@@ -2,16 +2,15 @@
   "name": "todomvc_stimulus",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "^3.2.0",
-    "coffeescript": "1.12.7",
+    "@rails/webpacker": "^3.5.5",
     "pluralize": "^7.0.0",
-    "rails-ujs": "^5.1.4",
-    "stimulus": "^1.0.0",
-    "todomvc-app-css": "^2.1.0",
-    "todomvc-common": "^1.0.4",
-    "turbolinks": "^5.0.3"
+    "rails-ujs": "^5.2.2",
+    "stimulus": "^1.1.1",
+    "todomvc-app-css": "^2.1.2",
+    "todomvc-common": "^1.0.5",
+    "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^3.1.14"
   }
 }
